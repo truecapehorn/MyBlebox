@@ -1,4 +1,4 @@
-from lib import switchBoxD_API
+from lib.switchBoxD_API import Blebox
 import time
 
 dev1='http://192.168.1.201'
@@ -8,6 +8,7 @@ dev3='http://192.168.1.203'
 dev=[dev1,dev2,dev3]
 
 for i in dev:
-    r=switchBoxD_API.relay_state(i)
-    print("Response ",r.text)
+    blebox= Blebox(i)
+    print(blebox.relay_state())
     time.sleep(1)
+
