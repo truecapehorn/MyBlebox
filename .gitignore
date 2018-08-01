@@ -1,0 +1,13 @@
+___pycache___/*
+*.conf
+*.log
+*.db
+*.tmp
+password.txt
+*.pyc
+myvenv
+db.sqlite3
+.DS_Store
+venv
+startup.txt
+.idea*
