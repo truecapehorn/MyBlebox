@@ -8,5 +8,6 @@ dev3='http://192.168.1.203'
 dev=[dev1,dev2,dev3]
 
 for i in dev:
-    switchBoxD_API.relay_state(i)
+    r=switchBoxD_API.relay_state(i)
+    print("Response ",r.text)
     time.sleep(1)
