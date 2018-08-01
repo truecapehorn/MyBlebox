@@ -30,7 +30,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/device/set'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # POSTDATA
         payload = {
             "device": {"deviceName": "MYswitchBoxD"},
@@ -48,7 +48,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/device/uptime'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text   # TEXT/HTML
@@ -68,7 +68,7 @@ class Blebox():
         action = 'Device - Get information about device'
         # ADRESS
         api_adress = '/api/device/state'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text   # TEXT/HTML
@@ -89,7 +89,7 @@ class Blebox():
         action = 'Device - Get information about network'
         # ADRESS
         api_adress = '/api/device/network'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text   # TEXT/HTML
@@ -106,7 +106,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/relay/set'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # POSTDATA
         payload = {
             "relays":
@@ -140,7 +140,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/s/{0}/{1}'.format(relay, state)
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text   # TEXT/HTML
@@ -157,7 +157,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/relay/state'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text   # TEXT/HTML
@@ -171,7 +171,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/switch/state'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text   # TEXT/HTML
@@ -192,7 +192,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/wifi/connect'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # POSTDATA
         payload = {"ssid": self.wifi_name, "pwd": self.wifi_pwd}
         # POST with form-encoded data
@@ -225,7 +225,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/wifi/status'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text # TEXT/HTML
@@ -240,7 +240,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/wifi/scan'
-        url = self.device_adress + api_adress
+        url = 'http://'+self.device_adress + api_adress
         # GET
         r = requests.get(url)
         return r.text # TEXT/HTML
@@ -261,9 +261,9 @@ def response_status(action, r):
 
 
 if __name__ == '__main__':
-    dev1 = 'http://192.168.1.201'
-    dev2 = 'http://192.168.1.202'
-    dev3 = 'http://192.168.1.203'
+    dev1 = '192.168.1.201'
+    dev2 = '192.168.1.202'
+    dev3 = '192.168.1.203'
 
     blebox1 = Blebox(dev1)
     blebox2 = Blebox(dev2)
