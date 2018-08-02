@@ -2,7 +2,7 @@
   Program do obslugi automatyki BleBox
   
   ## O Programie
---------------------------------------------------------
+
 Uruchomienie bleboxow
 Dozwolone wartosci dla argumentow to:
 ('yes', 'true', 'on', 'y', '1')
