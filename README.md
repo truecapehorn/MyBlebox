@@ -1,12 +1,13 @@
 # MyBlebox
-  Program do obslugi automatyki BleBox
+Program do obslugi automatyki BleBox <br />
+
   
   ## O Programie
+Uruchamianie programu z wiersza polecen <br />
 
-Uruchomienie bleboxow
-Dozwolone wartosci dla argumentow to:
-*   ('yes', 'true', 'on', 'y', '1')
-*   ('no', 'false', 'off', 'n', '0')
+#####dozwolone wartosci dla argumentow to:
+* dla włączenia przekaźnika: ('yes', 'true', 'on', 'y', '1')
+* dla wyłączenia przekaźnika:  ('no', 'false', 'off', 'n', '0')
     
 ##### argumenty opcjonalne:
 *  -h, --help      show this help message and exit
@@ -21,7 +22,7 @@ Dozwolone wartosci dla argumentow to:
 *  --state         Sprawdzenie stanow
 *  --version       show program's version number and exit
   
-  ## Przykłady
+  ## Przykłady użycia
   
 ```
 blebox -h       # uruchomienie pomocy
