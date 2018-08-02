@@ -3,7 +3,6 @@ import time
 import argparse
 import textwrap
 
-
 ip_halospoty = '192.168.1.201'
 ip_lampki = '192.168.1.202'
 ip_kotlownia = '192.168.1.203'

@@ -4,7 +4,7 @@
 import json
 import time
 import requests
-
+import sys
 
 
 # wifi_name = "ASUS_18_2G"
@@ -12,7 +12,6 @@ import requests
 
 
 class Blebox():
-
     """
     Obsluga Bleboxow
 
@@ -39,15 +38,15 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/device/set'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # POSTDATA
         payload = {
             "device": {"deviceName": "MYswitchBoxD"},
             "network": {"apSSID": self.wifi_name, "apPasswd": self.wifi_pwd}
         }
 
-        r = requests.post(url, data=json.dumps(payload))
-        return r.text   # TEXT/HTML
+        r = self.request_post(url,payload)
+        return r.text  # TEXT/HTML
 
     def devive_uptime(self):
         '''
@@ -57,11 +56,10 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/device/uptime'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text   # TEXT/HTML
-
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def device_state(self):
         '''
@@ -77,10 +75,10 @@ class Blebox():
         action = 'Device - Get information about device'
         # ADRESS
         api_adress = '/api/device/state'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text   # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def device_network(self):
         '''
@@ -98,10 +96,10 @@ class Blebox():
         action = 'Device - Get information about network'
         # ADRESS
         api_adress = '/api/device/network'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text   # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def relay_set_post(self, state1, state2):
         '''
@@ -115,7 +113,7 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/relay/set'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # POSTDATA
         payload = {
             "relays":
@@ -133,9 +131,8 @@ class Blebox():
         }
 
         # POST with form-encoded data
-        # r = requests.post(url, data=payload)
-        r = requests.post(url, data=json.dumps(payload))
-        return r.text   # TEXT/HTML
+        r = self.request_post(url,payload)
+        return r.text  # TEXT/HTML
 
     def relay_set_get(self, relay, state):
         '''
@@ -149,10 +146,10 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/s/{0}/{1}'.format(relay, state)
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text   # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def relay_state(self):
         '''
@@ -166,10 +163,10 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/relay/state'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text   # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def switch_state(self):
         '''
@@ -180,10 +177,10 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/switch/state'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text   # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def wifi_connect(self):
         '''
@@ -201,12 +198,12 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/wifi/connect'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # POSTDATA
         payload = {"ssid": self.wifi_name, "pwd": self.wifi_pwd}
         # POST with form-encoded data
-        r = requests.post(url, data=json.dumps(payload))
-        return r.text   # TEXT/HTML
+        r = self.request_post(url,payload)
+        return r.text  # TEXT/HTML
 
     def wifi_disconnect(self):
         '''
@@ -217,8 +214,8 @@ class Blebox():
         url = self.device_adress + api_adress
         # POSTDATA
         payload = {}
-        r = requests.post(url, data=json.dumps(payload))
-        return r.text   # TEXT/HTML
+        r = self.request_post(url,payload)
+        return r.text  # TEXT/HTML
 
     def wifi_status(self):
         '''
@@ -234,10 +231,10 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/wifi/status'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
 
     def wifi_scan(self):
         '''
@@ -249,10 +246,28 @@ class Blebox():
         '''
         # ADRESS
         api_adress = '/api/wifi/scan'
-        url = 'http://'+self.device_adress + api_adress
+        url = 'http://' + self.device_adress + api_adress
         # GET
-        r = requests.get(url)
-        return r.text # TEXT/HTML
+        r = self.request_get(url)
+        return r.text  # TEXT/HTML
+
+    def request_get(self, url):
+        try:
+            r = requests.get(url,timeout=3)
+            time.sleep(0.5)
+            return r
+        except requests.exceptions.Timeout or requests.exceptions.TooManyRedirects or requests.exceptions.RequestException as e:
+            print(e)
+            sys.exit(1)
+
+    def request_post(self, url, payload):
+        try:
+            r = requests.post(url, data=json.dumps(payload),timeout=3)
+            time.sleep(0.5)
+            return r
+        except requests.exceptions.Timeout or requests.exceptions.TooManyRedirects or requests.exceptions.RequestException as e:
+            print(e)
+            sys.exit(1)
 
 
 def response_status(action, r):
@@ -285,8 +300,3 @@ if __name__ == '__main__':
     time.sleep(5)
     blebox2.relay_set_get(1,0)
     print(blebox3.wifi_scan())
-
-
-
-
-
