@@ -8,7 +8,7 @@ Dozwolone wartosci dla argumentow to:
 *   ('yes', 'true', 'on', 'y', '1')
 *   ('no', 'false', 'off', 'n', '0')
     
-##### argumenty opcjionalne:
+##### argumenty opcjonalne:
 *  -h, --help      show this help message and exit
 *  -hl ACTION_HL   Sterowanie halospoty lewe
 *  -hp ACTION_HP   Sterowanie halospoty prawe
