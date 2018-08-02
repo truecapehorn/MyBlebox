@@ -16,9 +16,9 @@ devs = [halospoty, lampki, kotlownia]
 devs_lamp = [halospoty, lampki]
 
 def str2bool(v):
-    if v.lower() in ('yes', 'true', 'h', 'y', '1'):
+    if v.lower() in ('yes', 'true', 'on', 'y', '1'):
         return 1
-    elif v.lower() in ('no', 'false', 'l', 'n', '0'):
+    elif v.lower() in ('no', 'false', 'off', 'n', '0'):
         return 0
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
@@ -31,8 +31,8 @@ parser = argparse.ArgumentParser(
         --------------------------------------------------------
         Uruchomienie bleboxow
         Dozwolone wartosci dla argumentow to:
-            ('yes', 'true', 'h', 'y', '1')
-            ('no', 'false', 'l', 'n', '0')
+            ('yes', 'true', 'on', 'y', '1')
+            ('no', 'false', 'off', 'n', '0')
         --------------------------------------------------------
         '''))
 
