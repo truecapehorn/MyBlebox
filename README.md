@@ -5,7 +5,7 @@ Program do obslugi automatyki BleBox <br />
   ## O Programie
 Uruchamianie programu z wiersza polecen <br />
 
-#####dozwolone wartosci dla argumentow to:
+##### dozwolone wartosci dla argumentow to:
 * dla włączenia przekaźnika: ('yes', 'true', 'on', 'y', '1')
 * dla wyłączenia przekaźnika:  ('no', 'false', 'off', 'n', '0')
     
