@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import requests,json,time
-
+import json
+import time
+import requests
 
 # wifi_name = "ASUS_18_2G"
 # wifi_pwd = "501195121"
 
 
 class Blebox():
+
+    """
+    Obsluga Bleboxow
+
+    """
+
     def __init__(self, device_adress, wifi_name="ASUS_18_2G", wifi_pwd="501195121"):
         self.device_adress = device_adress
         self.wifi_name = wifi_name
