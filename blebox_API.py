@@ -23,9 +23,11 @@ class Blebox():
         self.wifi_pwd = wifi_pwd
 
     def makeUrl(self,api_adress):
+        '''Generacja adresu url'''
         return 'http://' + self.device_adress + api_adress
 
     def request_get(self, url):
+        '''Generacja requestu typu GET'''
         try:
             r = requests.get(url,timeout=3)
             time.sleep(0.5)
@@ -35,6 +37,7 @@ class Blebox():
             sys.exit(1)
 
     def request_post(self, url, payload):
+        '''Generacja requestu typu POST'''
         try:
             r = requests.post(url, data=json.dumps(payload),timeout=3)
             time.sleep(0.5)
@@ -58,7 +61,7 @@ class Blebox():
 
 
 class SwichBoxD(Blebox):
-    '''Clasa opisujaca moduły SwichBoxD dziedzic z kalsy Blebox'''
+    '''Clasa opisujaca moduły SwichBoxD dziedziczy z klasy Blebox'''
 
 
     def device_set(self):
@@ -179,7 +182,6 @@ class SwichBoxD(Blebox):
         # ADRESS
         api_adress = '/s/{0}/{1}'.format(relay, state)
         url=self.makeUrl(api_adress)
-        # GET
         return self.request_get(url) # GET
 
     def relay_state(self):
