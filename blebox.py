@@ -1,4 +1,4 @@
-from switchBoxD_API_v2 import SwichBoxD
+from blebox_API import SwichBoxD
 import time
 import argparse
 import textwrap
