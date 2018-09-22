@@ -1,4 +1,4 @@
-from switchBoxD_API import Blebox
+from switchBoxD_API_v2 import SwichBoxD
 import time
 import argparse
 import textwrap
@@ -8,11 +8,12 @@ ip_lampki = '192.168.1.202'
 ip_kotlownia = '192.168.1.203'
 ips = [ip_halospoty, ip_lampki, ip_kotlownia]
 
-halospoty = Blebox(ip_halospoty)
-lampki = Blebox(ip_lampki)
-kotlownia = Blebox(ip_kotlownia)
+halospoty = SwichBoxD(ip_halospoty)
+lampki = SwichBoxD(ip_lampki)
+kotlownia = SwichBoxD(ip_kotlownia)
 devs = [halospoty, lampki, kotlownia]
 devs_lamp = [halospoty, lampki]
+
 
 def str2bool(v):
     if v.lower() in ('yes', 'true', 'on', 'y', '1'):
@@ -21,6 +22,10 @@ def str2bool(v):
         return 0
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
+
+
+def relay_out(r, nr_relay):
+    return r["relays"][nr_relay]["name"], r["relays"][nr_relay]["state"]
 
 
 parser = argparse.ArgumentParser(
@@ -67,45 +72,48 @@ action_p = results.action_p
 action_w = results.action_w
 action_lamp = results.action_lamp
 action_all = results.action_all
-action_state=results.action_state
-action = [action_hl, action_hp, action_l, action_b, action_p, action_w, action_lamp, action_all]
+action_state = results.action_state
+actions = [action_hl, action_hp, action_l, action_b, action_p, action_w, action_lamp, action_all]
+
+
 
 if action_hl != None:
-    print('akcja dla halospoty lewe', action_hl)
-    print(halospoty.relay_set_get(0, action_hl))
+    r = halospoty.relay_set_get(0, action_hl)
+    print(relay_out(r, 0))
 if action_hp != None:
-    print('akcja dla halospoty prawe', action_hp)
-    print(halospoty.relay_set_get(1, action_hp))
+    r = halospoty.relay_set_get(1, action_hp)
+    print(relay_out(r, 1))
 if action_l != None:
-    print('akcja dla lampki nocnej', action_l)
-    print(lampki.relay_set_get(0, action_l))
+    r = lampki.relay_set_get(0, action_l)
+    print(relay_out(r, 0))
 if action_b != None:
-    print('akcja dla biurka', action_b)
-    print(lampki.relay_set_get(1, action_b))
+    r = lampki.relay_set_get(1, action_b)
+    print(relay_out(r, 1))
 if action_p != None:
-    print('akcja dla piecyka', action_p)
-    print(kotlownia.relay_set_get(0, action_p))
+    r = kotlownia.relay_set_get(0, action_p)
+    print(relay_out(r, 0))
 if action_w != None:
-    print('akcja dla wiatrak', action_w)
-    print(kotlownia.relay_set_get(1, action_w))
+    r = kotlownia.relay_set_get(1, action_w)
+    print(relay_out(r, 1))
 if action_lamp != None:
     print('akcja grupowa', action_lamp)
     for dev in devs_lamp:
         for relay in [0, 1]:
             dev.relay_set_get(relay, action_lamp)
             time.sleep(0.5)
-        print(dev.relay_state())
+            r = dev.relay_state()
+            print(relay_out(r, relay))
 if action_all != None:
     print('akcja grupowa', action_all)
     for dev in devs:
         for relay in [0, 1]:
             dev.relay_set_get(relay, action_all)
             time.sleep(0.5)
-        print(dev.relay_state())
+            r = dev.relay_state()
+            print(relay_out(r, relay))
 if action_state == True:
     print('sprawdzenie stanow', action_state)
     for dev in devs:
         print(dev.relay_state())
         time.sleep(0.5)
-
 
