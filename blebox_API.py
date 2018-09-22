@@ -30,7 +30,7 @@ class Blebox():
         '''Generacja requestu typu GET'''
         try:
             r = requests.get(url,timeout=3)
-            time.sleep(0.5)
+            #time.sleep(0.5)
             return r.json()
         except requests.exceptions.Timeout or requests.exceptions.TooManyRedirects or requests.exceptions.RequestException as e:
             print(e)
@@ -287,13 +287,20 @@ if __name__ == '__main__':
     swBox1 = SwichBoxD(dev1)
     swBox2 = SwichBoxD(dev2)
     swBox3 = SwichBoxD(dev3)
-    
-    print(swBox1.wifi_connect())
-    print(swBox1.relay_state())
-    print(swBox2.relay_state())
-    print(swBox3.relay_state())
-    swBox2.relay_set_get(1,1)
+    swBox=[swBox1,swBox2,swBox3]
+
+    for box in swBox:
+        print(30*"=")
+        print("Blebox: ",box.device_adress)
+        print("{}: {} ".format("WiFi Connect",box.wifi_connect()))
+        print("{}: {} ".format("Wifi Status",box.wifi_status()))
+        print("{}: {} ".format("Wifi Scan",box.wifi_scan()))
+        print("{}: {} ".format("Relay Get",box.relay_state()))
+        print("{}: {} ".format("Switch State",box.switch_state()))
+        print("{}: {} ".format("Dev State",box.device_state()))
+        print("{}: {} ".format("Up Time",box.devive_uptime()))
+    print("Uruchominie lampki")
+    print(swBox2.relay_set_get(1, 1))
     time.sleep(5)
     swBox2.relay_set_get(1,0)
-    print(swBox3.wifi_scan())
 

@@ -100,7 +100,7 @@ if action_lamp != None:
     for dev in devs_lamp:
         for relay in [0, 1]:
             dev.relay_set_get(relay, action_lamp)
-            time.sleep(0.5)
+            #time.sleep(0.1)
             r = dev.relay_state()
             print(relay_out(r, relay))
 if action_all != None:
@@ -108,12 +108,12 @@ if action_all != None:
     for dev in devs:
         for relay in [0, 1]:
             dev.relay_set_get(relay, action_all)
-            time.sleep(0.5)
+            #time.sleep(0.1)
             r = dev.relay_state()
             print(relay_out(r, relay))
 if action_state == True:
     print('sprawdzenie stanow', action_state)
     for dev in devs:
         print(dev.relay_state())
-        time.sleep(0.5)
+        #time.sleep(0.5)
 
