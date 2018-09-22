@@ -274,11 +274,6 @@ class SwichBoxD(Blebox):
         return self.request_get(url) # GET
 
 
-
-
-
-
-
 if __name__ == '__main__':
     dev1 = '192.168.1.201'
     dev2 = '192.168.1.202'
