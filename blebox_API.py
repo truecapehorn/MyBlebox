@@ -298,6 +298,7 @@ if __name__ == '__main__':
         print("{}: {} ".format("Switch State", box.switch_state()))
         print("{}: {} ".format("Dev State", box.device_state()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
+        print("{}: {} ".format("Relay State", box.relay_state()))
     print("Uruchominie lampki")
     print(swBox2.relay_set_get(1, 1))
     time.sleep(5)

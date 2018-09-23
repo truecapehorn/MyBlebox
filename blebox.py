@@ -171,3 +171,4 @@ if action_status == True:
         print("{}: {} ".format("Device state", box.device_state()))
         print("{}: {} ".format("Device network", box.device_network()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
+        print("{}: {} ".format("Relay state", box.relay_state()))
