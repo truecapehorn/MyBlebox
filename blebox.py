@@ -82,11 +82,21 @@ action_k = results.action_k
 action_mp = results.action_mp
 action_we = results.action_we
 action_laz = results.action_laz
-
 action_lamp = results.action_lamp
+if action_lamp != None:
+    action_hl = action_lamp
+    action_hp = action_lamp
+    action_l = action_lamp
+    action_b = action_lamp
 action_all = results.action_all
+if action_all != None:
+    ction_hl = action_all
+    action_hp = action_all
+    action_l = action_all
+    action_b = action_all
+    action_p = action_all
+    action_w = action_all
 action_status = results.action_status
-actions = [action_hl, action_hp, action_l, action_b, action_p, action_w, action_lamp, action_all]
 
 
 class Devices:
@@ -99,6 +109,12 @@ class Devices:
         self.blebox = blebox
 
         # Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
+
+    def relaySet(self):
+        if self.action != None:
+            self.blebox.relay_set_get(self.noRelay, self.action)
+            r = self.blebox.relay_set_get(self.noRelay, self.action)
+        return r
 
 
 #   deklaracja numerow IP
@@ -134,30 +150,13 @@ we = Devices("Wejscie", 0, action_we, wejscie)
 laz = Devices("Łaźenka", 1, action_laz, wejscie)
 
 devs = [hl, hp, l, b, p, w]  # tablica klas z wszystkimi  urzadzeniami
-devs_lamp = [hl, hp, l, b]  # tablica klas z lampami
 
 #   akcja dla wywolan pojedynczych
 for dev in devs:
     if dev.action != None:
-        print('Akcja dla {} - {}'.format(dev.name, dev.action))
-        r = dev.blebox.relay_set_get(dev.noRelay, dev.action)
-        print(relay_out(r, dev.noRelay))
-
-#   akcja grupowe dla lamp
-if action_lamp != None:
-    print('akcja grupowa dla lamp', action_lamp)
-    for dev in devs_lamp:
-        dev.blebox.relay_set_get(dev.noRelay, action_lamp)
-        r = dev.blebox.relay_state()
-        print(relay_out(r, dev.noRelay))
-
-#   akcje grupowe dla wszytskich urzadzen
-if action_all != None:
-    print('akcja grupowa dla wszystkich urzadzen', action_all)
-    for dev in devs:
-        dev.blebox.relay_set_get(dev.noRelay, action_all)
-        r = dev.blebox.relay_state()
-        print(relay_out(r, dev.noRelay))
+        print('{} - {}'.format(dev.name, dev.action))
+        r = dev.relaySet()
+        # print(relay_out(r, dev.noRelay))
 
 #   odczyt ststusow bleboxow
 if action_status == True:
