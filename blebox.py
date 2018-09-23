@@ -4,7 +4,6 @@ import argparse
 import textwrap
 
 
-
 def str2bool(v):
     if v.lower() in ('yes', 'true', 'on', 'y', '1'):
         return 1
@@ -91,14 +90,16 @@ actions = [action_hl, action_hp, action_l, action_b, action_p, action_w, action_
 
 
 class Devices:
-    devs={}
-    def __init__(self,name, noRelay, action,blebox):
-        self.name=name
-        self.noRelay=noRelay
-        self.action=action
-        self.blebox=blebox
+    devs = {}
 
-        #Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
+    def __init__(self, name, noRelay, action, blebox):
+        self.name = name
+        self.noRelay = noRelay
+        self.action = action
+        self.blebox = blebox
+
+        # Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
+
 
 #   deklaracja numerow IP
 ip_halospoty = '192.168.1.201'
@@ -106,7 +107,7 @@ ip_lampki = '192.168.1.202'
 ip_kotlownia = '192.168.1.203'
 ip_kuchnia = "192.168.1.204"
 ip_wejscie = "192.168.1.205"
-ips = [ip_halospoty, ip_lampki, ip_kotlownia]   #tablica z ipkami
+ips = [ip_halospoty, ip_lampki, ip_kotlownia]  # tablica z ipkami
 
 #   dodanie nowych urzadzen blebox
 halospoty = SwichBoxD(ip_halospoty)
@@ -114,51 +115,49 @@ lampki = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
 kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
-swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]    #tablica z bleboxami
+swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
-hl=Devices("Halospoty lewe",0,action_hl,halospoty)
-hp=Devices("Halospoty prawe",1,action_hp,halospoty)
+hl = Devices("Halospoty lewe", 0, action_hl, halospoty)
+hp = Devices("Halospoty prawe", 1, action_hp, halospoty)
 
-l=Devices("Lampka nocna",0,action_l,lampki)
-b=Devices("Biurko",1,action_b,lampki)
+l = Devices("Lampka nocna", 0, action_l, lampki)
+b = Devices("Biurko", 1, action_b, lampki)
 
-p=Devices("Piecyk",0,action_p,kotlownia)
-w=Devices("Wiatrak",1,action_w,kotlownia)
+p = Devices("Piecyk", 0, action_p, kotlownia)
+w = Devices("Wiatrak", 1, action_w, kotlownia)
 
-k=Devices("Kuchnia",0,action_k,kuchnia)
-mp=Devices("Mały pokój",1,action_mp,kuchnia)
+k = Devices("Kuchnia", 0, action_k, kuchnia)
+mp = Devices("Mały pokój", 1, action_mp, kuchnia)
 
-we=Devices("Wejscie",0,action_we,wejscie)
-laz=Devices("Łaźenka",1,action_laz,wejscie)
+we = Devices("Wejscie", 0, action_we, wejscie)
+laz = Devices("Łaźenka", 1, action_laz, wejscie)
 
-
-devs=[hl,hp,l,b,p,w]    #tablica klas z wszystkimi  urzadzeniami
-devs_lamp=[hl,hp,l,b]   # tablica klas z lampami
-
+devs = [hl, hp, l, b, p, w]  # tablica klas z wszystkimi  urzadzeniami
+devs_lamp = [hl, hp, l, b]  # tablica klas z lampami
 
 #   akcja dla wywolan pojedynczych
 for dev in devs:
-    if dev.action!=None:
-        print('Akcja dla {} - {}'.format(dev.name,dev.action))
-        r=dev.blebox.relay_set_get(dev.noRelay,dev.action)
-        print(relay_out(r,dev.noRelay))
+    if dev.action != None:
+        print('Akcja dla {} - {}'.format(dev.name, dev.action))
+        r = dev.blebox.relay_set_get(dev.noRelay, dev.action)
+        print(relay_out(r, dev.noRelay))
 
 #   akcja grupowe dla lamp
 if action_lamp != None:
     print('akcja grupowa dla lamp', action_lamp)
     for dev in devs_lamp:
-        dev.blebox.relay_set_get(dev.noRelay,action_lamp)
-        r=dev.blebox.relay_state()
-        print(relay_out(r,dev.noRelay))
+        dev.blebox.relay_set_get(dev.noRelay, action_lamp)
+        r = dev.blebox.relay_state()
+        print(relay_out(r, dev.noRelay))
 
 #   akcje grupowe dla wszytskich urzadzen
 if action_all != None:
     print('akcja grupowa dla wszystkich urzadzen', action_all)
     for dev in devs:
-        dev.blebox.relay_set_get(dev.noRelay,action_all)
-        r=dev.blebox.relay_state()
-        print(relay_out(r,dev.noRelay))
+        dev.blebox.relay_set_get(dev.noRelay, action_all)
+        r = dev.blebox.relay_state()
+        print(relay_out(r, dev.noRelay))
 
 #   odczyt ststusow bleboxow
 if action_state == True:
