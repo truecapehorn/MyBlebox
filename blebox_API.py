@@ -94,7 +94,7 @@ class SwichBoxD(Blebox):
 
         return self.request_post(url, payload)
 
-    def devive_uptime(self):
+    def device_uptime(self):
         '''
             Device - Get device uptime
             RX:
@@ -297,7 +297,7 @@ if __name__ == '__main__':
         print("{}: {} ".format("Relay Get", box.relay_state()))
         print("{}: {} ".format("Switch State", box.switch_state()))
         print("{}: {} ".format("Dev State", box.device_state()))
-        print("{}: {} ".format("Up Time", box.devive_uptime()))
+        print("{}: {} ".format("Up Time", box.device_uptime()))
     print("Uruchominie lampki")
     print(swBox2.relay_set_get(1, 1))
     time.sleep(5)
