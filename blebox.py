@@ -11,7 +11,7 @@ ip_wejscie = "192.168.1.205"
 
 ips = [ip_halospoty, ip_lampki, ip_kotlownia]
 
-#   dodanie nowych urzadzen
+#   dodanie nowych urzadzen   blebox
 halospoty = SwichBoxD(ip_halospoty)
 lampki = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
@@ -106,40 +106,38 @@ action_all = results.action_all
 action_state = results.action_state
 actions = [action_hl, action_hp, action_l, action_b, action_p, action_w, action_lamp, action_all]
 
-if action_hl != None:
-    r = halospoty.relay_set_get(0, action_hl)
-    print(relay_out(r, 0))
-if action_hp != None:
-    r = halospoty.relay_set_get(1, action_hp)
-    print(relay_out(r, 1))
 
-if action_l != None:
-    r = lampki.relay_set_get(0, action_l)
-    print(relay_out(r, 0))
-if action_b != None:
-    r = lampki.relay_set_get(1, action_b)
-    print(relay_out(r, 1))
+class Devices:
+    devs={}
+    def __init__(self,name, noRelay, action,blebox):
+        self.name=name
+        self.noRelay=noRelay
+        self.action=action
+        self.blebox=blebox
 
-if action_p != None:
-    r = kotlownia.relay_set_get(0, action_p)
-    print(relay_out(r, 0))
-if action_w != None:
-    r = kotlownia.relay_set_get(1, action_w)
-    print(relay_out(r, 1))
+        Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
 
-if action_k != None:
-    r = kuchnia.relay_set_get(0, action_k)
-    print(relay_out(r, 0))
-if action_mp != None:
-    r = kuchnia.relay_set_get(1, action_mp)
-    print(relay_out(r, 1))
+hl=Devices("Halospoty lewe",0,action_hl,halospoty)
+hp=Devices("Halospoty prawe",1,action_hp,halospoty)
 
-if action_we != None:
-    r = wejscie.relay_set_get(0, action_we)
-    print(relay_out(r, 0))
-if action_laz != None:
-    r = kuchnia.relay_set_get(1, action_laz)
-    print(relay_out(r, 1))
+l=Devices("lampka nocna",0,action_l,lampki)
+b=Devices("Biurko",1,action_b,lampki)
+
+p=Devices("Piecyk",0,action_p,kotlownia)
+w=Devices("Wiatrak",1,action_w,kotlownia)
+
+k=Devices("Kuchnia",0,action_k,kuchnia)
+mp=Devices("Mały pokój",1,action_mp,kuchnia)
+
+we=Devices("Wejscie",0,action_we,wejscie)
+laz=Devices("Łaźenka",1,action_laz,wejscie)
+
+
+
+for v in Devices.devs.values():
+    if v[1]!=None:
+        r=v[2].relay_set_get(v[0],v[1])
+        print(relay_out(r,v[1]))
 
 if action_lamp != None:
     print('akcja grupowa', action_lamp)
@@ -151,11 +149,11 @@ if action_lamp != None:
             print(relay_out(r, relay))
 if action_all != None:
     print('akcja grupowa', action_all)
-    for dev in devs:
+    for box in swBox:
         for relay in [0, 1]:
-            dev.relay_set_get(relay, action_all)
+            box.relay_set_get(relay, action_all)
             # time.sleep(0.1)
-            r = dev.relay_state()
+            r = box.relay_state()
             print(relay_out(r, relay))
 if action_state == True:
     print('sprawdzenie stanow', action_state)
@@ -165,7 +163,4 @@ if action_state == True:
         print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
         print("{}: {} ".format("Wifi Status", box.wifi_status()))
         print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Relay Get", box.relay_state()))
-        print("{}: {} ".format("Switch State", box.switch_state()))
-        print("{}: {} ".format("Dev State", box.device_state()))
         print("{}: {} ".format("Up Time", box.devive_uptime()))
