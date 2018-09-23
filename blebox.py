@@ -115,7 +115,7 @@ lampki = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
 kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
-swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
+swBox = [halospoty, lampki, kotlownia]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
 hl = Devices("Halospoty lewe", 0, action_hl, halospoty)
