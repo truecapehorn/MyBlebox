@@ -28,33 +28,31 @@ class Blebox():
         self.wifi_name = wifi_name
         self.wifi_pwd = wifi_pwd
 
-    def makeUrl(self,api_adress):
+    def makeUrl(self, api_adress):
         '''Generacja adresu url'''
         return 'http://' + self.device_adress + api_adress
 
     def request_get(self, url):
         '''Generacja requestu typu GET'''
         try:
-            r = requests.get(url,timeout=3)
-            #time.sleep(0.5)
+            r = requests.get(url, timeout=3)
+            # time.sleep(0.5)
             return r.json()
         except Exception as e:
             print(e)
-            #sys.exit(0)
+            # sys.exit(0)
 
     def request_post(self, url, payload):
         '''Generacja requestu typu POST'''
         try:
-            r = requests.post(url, data=json.dumps(payload),timeout=3)
+            r = requests.post(url, data=json.dumps(payload), timeout=3)
             time.sleep(0.5)
             return r.json()
         except Exception as e:
             print(e)
-            #sys.exit(0)
+            # sys.exit(0)
 
-
-
-    def response_status(self,action, r):
+    def response_status(self, action, r):
         '''Wydrukowanie wynikow'''
         # Response, status etc
         print('\n' + 125 * '-' + '\n')
@@ -70,7 +68,6 @@ class Blebox():
 
 class SwichBoxD(Blebox):
     '''Clasa opisujaca moduły SwichBoxD dziedziczy z klasy Blebox'''
-
 
     def device_set(self):
         '''Device - Change device configuration
@@ -88,14 +85,14 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/device/set'
-        url=self.makeUrl(api_adress)
+        url = self.makeUrl(api_adress)
         # POSTDATA
         payload = {
             "device": {"deviceName": "MYswitchBoxD"},
             "network": {"apSSID": self.wifi_name, "apPasswd": self.wifi_pwd}
         }
 
-        return  self.request_post(url,payload)
+        return self.request_post(url, payload)
 
     def devive_uptime(self):
         '''
@@ -105,9 +102,9 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/device/uptime'
-        url=self.makeUrl(api_adress)
+        url = self.makeUrl(api_adress)
         # GET
-        return self.request_get(url) # GET
+        return self.request_get(url)  # GET
 
     def device_state(self):
         '''
@@ -123,8 +120,8 @@ class SwichBoxD(Blebox):
         action = 'Device - Get information about device'
         # ADRESS
         api_adress = '/api/device/state'
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
     def device_network(self):
         '''
@@ -142,8 +139,8 @@ class SwichBoxD(Blebox):
         action = 'Device - Get information about network'
         # ADRESS
         api_adress = '/api/device/network'
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
     def relay_set_post(self, state1, state2):
         '''
@@ -157,7 +154,7 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/relay/set'
-        url=self.makeUrl(api_adress)
+        url = self.makeUrl(api_adress)
         # POSTDATA
         payload = {
             "relays":
@@ -174,8 +171,7 @@ class SwichBoxD(Blebox):
                 }]
         }
 
-
-        return self.request_post(url,payload) # POST
+        return self.request_post(url, payload)  # POST
 
     def relay_set_get(self, relay, state):
         '''
@@ -189,8 +185,8 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/s/{0}/{1}'.format(relay, state)
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
     def relay_state(self):
         '''
@@ -204,8 +200,8 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/relay/state'
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
     def switch_state(self):
         '''
@@ -216,8 +212,8 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/switch/state'
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
     def wifi_connect(self):
         '''
@@ -235,10 +231,10 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/wifi/connect'
-        url=self.makeUrl(api_adress)
+        url = self.makeUrl(api_adress)
         # POSTDATA
         payload = {"ssid": self.wifi_name, "pwd": self.wifi_pwd}
-        return self.request_post(url,payload) # POST
+        return self.request_post(url, payload)  # POST
 
     def wifi_disconnect(self):
         '''
@@ -246,10 +242,10 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/wifi/disconnect'
-        url=self.makeUrl(api_adress)
+        url = self.makeUrl(api_adress)
         # POSTDATA
         payload = {}
-        return self.request_post(url,payload) # POST
+        return self.request_post(url, payload)  # POST
 
     def wifi_status(self):
         '''
@@ -265,8 +261,8 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/wifi/status'
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
     def wifi_scan(self):
         '''
@@ -278,8 +274,8 @@ class SwichBoxD(Blebox):
         '''
         # ADRESS
         api_adress = '/api/wifi/scan'
-        url=self.makeUrl(api_adress)
-        return self.request_get(url) # GET
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
 
 
 if __name__ == '__main__':
@@ -290,20 +286,19 @@ if __name__ == '__main__':
     swBox1 = SwichBoxD(dev1)
     swBox2 = SwichBoxD(dev2)
     swBox3 = SwichBoxD(dev3)
-    swBox=[swBox1,swBox2,swBox3]
+    swBox = [swBox1, swBox2, swBox3]
 
     for box in swBox:
-        print(30*"=")
-        print("Blebox: ",box.device_adress)
-        print("{}: {} ".format("WiFi Connect",box.wifi_connect()))
-        print("{}: {} ".format("Wifi Status",box.wifi_status()))
-        print("{}: {} ".format("Wifi Scan",box.wifi_scan()))
-        print("{}: {} ".format("Relay Get",box.relay_state()))
-        print("{}: {} ".format("Switch State",box.switch_state()))
-        print("{}: {} ".format("Dev State",box.device_state()))
-        print("{}: {} ".format("Up Time",box.devive_uptime()))
+        print(30 * "=")
+        print("Blebox: ", box.device_adress)
+        print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
+        print("{}: {} ".format("Wifi Status", box.wifi_status()))
+        print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
+        print("{}: {} ".format("Relay Get", box.relay_state()))
+        print("{}: {} ".format("Switch State", box.switch_state()))
+        print("{}: {} ".format("Dev State", box.device_state()))
+        print("{}: {} ".format("Up Time", box.devive_uptime()))
     print("Uruchominie lampki")
     print(swBox2.relay_set_get(1, 1))
     time.sleep(5)
-    swBox2.relay_set_get(1,0)
-
+    swBox2.relay_set_get(1, 0)
