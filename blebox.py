@@ -4,6 +4,24 @@ import argparse
 import textwrap
 
 
+class Devices:
+    devs = {}
+
+    def __init__(self, name, noRelay, action, blebox):
+        self.name = name
+        self.noRelay = noRelay
+        self.action = action
+        self.blebox = blebox
+
+        # Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
+
+    def relaySet(self):
+        if self.action is not None:
+            self.blebox.relay_set_get(self.noRelay, self.action)
+            r = self.blebox.relay_set_get(self.noRelay, self.action)
+        return r
+
+
 def str2bool(v):
     if v.lower() in ('yes', 'true', 'on', 'y', '1'):
         return 1
@@ -83,13 +101,13 @@ action_mp = results.action_mp
 action_we = results.action_we
 action_laz = results.action_laz
 action_lamp = results.action_lamp
-if action_lamp != None:
+if action_lamp is not None:     # przypisanie akcji gupowych dla lamp
     action_hl = action_lamp
     action_hp = action_lamp
     action_l = action_lamp
     action_b = action_lamp
 action_all = results.action_all
-if action_all != None:
+if action_all is not None:      # przypisanie akcji gupowych wszystkie
     ction_hl = action_all
     action_hp = action_all
     action_l = action_all
@@ -97,25 +115,6 @@ if action_all != None:
     action_p = action_all
     action_w = action_all
 action_status = results.action_status
-
-
-class Devices:
-    devs = {}
-
-    def __init__(self, name, noRelay, action, blebox):
-        self.name = name
-        self.noRelay = noRelay
-        self.action = action
-        self.blebox = blebox
-
-        # Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
-
-    def relaySet(self):
-        if self.action != None:
-            self.blebox.relay_set_get(self.noRelay, self.action)
-            r = self.blebox.relay_set_get(self.noRelay, self.action)
-        return r
-
 
 #   deklaracja numerow IP
 ip_halospoty = '192.168.1.201'
@@ -151,9 +150,9 @@ laz = Devices("Łaźenka", 1, action_laz, wejscie)
 
 devs = [hl, hp, l, b, p, w]  # tablica klas z wszystkimi  urzadzeniami
 
-#   akcja dla wywolan pojedynczych
+#   akcja dla przekaznikow
 for dev in devs:
-    if dev.action != None:
+    if dev.action is not None:
         print('{} - {}'.format(dev.name, dev.action))
         r = dev.relaySet()
         # print(relay_out(r, dev.noRelay))
