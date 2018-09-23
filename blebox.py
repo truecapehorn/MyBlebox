@@ -3,23 +3,6 @@ import time
 import argparse
 import textwrap
 
-ip_halospoty = '192.168.1.201'
-ip_lampki = '192.168.1.202'
-ip_kotlownia = '192.168.1.203'
-ip_kuchnia = "192.168.1.204"
-ip_wejscie = "192.168.1.205"
-
-ips = [ip_halospoty, ip_lampki, ip_kotlownia]
-
-#   dodanie nowych urzadzen   blebox
-halospoty = SwichBoxD(ip_halospoty)
-lampki = SwichBoxD(ip_lampki)
-kotlownia = SwichBoxD(ip_kotlownia)
-kuchnia = SwichBoxD(ip_kuchnia)
-wejscie = SwichBoxD(ip_wejscie)
-
-swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]
-devs_lamp = [halospoty, lampki]
 
 
 def str2bool(v):
@@ -115,12 +98,29 @@ class Devices:
         self.action=action
         self.blebox=blebox
 
-        Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
+        #Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
+
+#   deklaracja numerow IP
+ip_halospoty = '192.168.1.201'
+ip_lampki = '192.168.1.202'
+ip_kotlownia = '192.168.1.203'
+ip_kuchnia = "192.168.1.204"
+ip_wejscie = "192.168.1.205"
+ips = [ip_halospoty, ip_lampki, ip_kotlownia]   #tablica z ipkami
+
+#   dodanie nowych urzadzen blebox
+halospoty = SwichBoxD(ip_halospoty)
+lampki = SwichBoxD(ip_lampki)
+kotlownia = SwichBoxD(ip_kotlownia)
+kuchnia = SwichBoxD(ip_kuchnia)
+wejscie = SwichBoxD(ip_wejscie)
+swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]    #tablica z bleboxami
+
 
 hl=Devices("Halospoty lewe",0,action_hl,halospoty)
 hp=Devices("Halospoty prawe",1,action_hp,halospoty)
 
-l=Devices("lampka nocna",0,action_l,lampki)
+l=Devices("Lampka nocna",0,action_l,lampki)
 b=Devices("Biurko",1,action_b,lampki)
 
 p=Devices("Piecyk",0,action_p,kotlownia)
@@ -133,28 +133,34 @@ we=Devices("Wejscie",0,action_we,wejscie)
 laz=Devices("Łaźenka",1,action_laz,wejscie)
 
 
+devs=[hl,hp,l,b,p,w]    #tablica klas z wszystkimi  urzadzeniami
+devs_lamp=[hl,hp,l,b]   # tablica klas z lampami
 
-for v in Devices.devs.values():
-    if v[1]!=None:
-        r=v[2].relay_set_get(v[0],v[1])
-        print(relay_out(r,v[1]))
 
+#   akcja dla wywolan pojedynczych
+for dev in devs:
+    if dev.action!=None:
+        print('Akcja dla {} - {}'.format(dev.name,dev.action))
+        r=dev.blebox.relay_set_get(dev.noRelay,dev.action)
+        print(relay_out(r,dev.noRelay))
+
+#   akcja grupowe dla lamp
 if action_lamp != None:
-    print('akcja grupowa', action_lamp)
+    print('akcja grupowa dla lamp', action_lamp)
     for dev in devs_lamp:
-        for relay in [0, 1]:
-            dev.relay_set_get(relay, action_lamp)
-            # time.sleep(0.1)
-            r = dev.relay_state()
-            print(relay_out(r, relay))
+        dev.blebox.relay_set_get(dev.noRelay,action_lamp)
+        r=dev.blebox.relay_state()
+        print(relay_out(r,dev.noRelay))
+
+#   akcje grupowe dla wszytskich urzadzen
 if action_all != None:
-    print('akcja grupowa', action_all)
-    for box in swBox:
-        for relay in [0, 1]:
-            box.relay_set_get(relay, action_all)
-            # time.sleep(0.1)
-            r = box.relay_state()
-            print(relay_out(r, relay))
+    print('akcja grupowa dla wszystkich urzadzen', action_all)
+    for dev in devs:
+        dev.blebox.relay_set_get(dev.noRelay,action_all)
+        r=dev.blebox.relay_state()
+        print(relay_out(r,dev.noRelay))
+
+#   odczyt ststusow bleboxow
 if action_state == True:
     print('sprawdzenie stanow', action_state)
     for box in swBox:
