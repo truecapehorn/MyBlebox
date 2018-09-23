@@ -47,6 +47,8 @@ parser = argparse.ArgumentParser(
         Dozwolone wartosci dla argumentow to:
             ('yes', 'true', 'on', 'y', '1')
             ('no', 'false', 'off', 'n', '0')
+        example:
+            python3 belbox.py -hl 1
         --------------------------------------------------------
         '''))
 
@@ -54,18 +56,22 @@ parser.add_argument('-hl', action='store', dest='action_hl', type=str2bool,
                     help='Sterowanie halospoty lewe')
 parser.add_argument('-hp', action='store', dest='action_hp', type=str2bool,
                     help='Sterowanie halospoty prawe')
+
 parser.add_argument('-l', action='store', dest='action_l', type=str2bool,
                     help='Sterowanie lampka nocna')
 parser.add_argument('-b', action='store', dest='action_b', type=str2bool,
                     help='Sterowanie biurko')
+
 parser.add_argument('-p', action='store', dest='action_p', type=str2bool,
                     help='Sterowanie piecyk')
 parser.add_argument('-w', action='store', dest='action_w', type=str2bool,
                     help='Sterowanie wiatrak')
+
 parser.add_argument('-k', action='store', dest='action_k', type=str2bool,
                     help='Sterowanie kuchnia')
 parser.add_argument('-mp', action='store', dest='action_mp', type=str2bool,
                     help='Sterowanie mały pokój')
+
 parser.add_argument('-we', action='store', dest='action_we', type=str2bool,
                     help='Sterowanie wejście')
 parser.add_argument('-laz', action='store', dest='action_laz', type=str2bool,
