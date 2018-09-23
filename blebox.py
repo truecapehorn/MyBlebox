@@ -168,4 +168,6 @@ if action_state == True:
         print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
         print("{}: {} ".format("Wifi Status", box.wifi_status()))
         print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Up Time", box.devive_uptime()))
+        print("{}: {} ".format("Device state", box.device_state()))
+        print("{}: {} ".format("Device network", box.device_network()))
+        print("{}: {} ".format("Up Time", box.device_uptime()))
