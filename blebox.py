@@ -11,7 +11,7 @@ ips = [ip_halospoty, ip_lampki, ip_kotlownia]
 halospoty = SwichBoxD(ip_halospoty)
 lampki = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
-devs = [halospoty, lampki, kotlownia]
+swBox = [halospoty, lampki, kotlownia]
 devs_lamp = [halospoty, lampki]
 
 
@@ -29,7 +29,7 @@ def relay_out(r, nr_relay):
 
 
 parser = argparse.ArgumentParser(
-    prog='PROG',
+    prog='BleBox',
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description=textwrap.dedent('''\
         --------------------------------------------------------
@@ -60,7 +60,7 @@ parser.add_argument('--state', action='store_true', default=False,
                     dest='action_state',
                     help='Sprawdzenie stanow')
 
-parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+parser.add_argument('--version', action='version', version='%(prog)s 1.1')
 
 results = parser.parse_args()  # pobranie rezultatow parsera
 
@@ -113,7 +113,14 @@ if action_all != None:
             print(relay_out(r, relay))
 if action_state == True:
     print('sprawdzenie stanow', action_state)
-    for dev in devs:
-        print(dev.relay_state())
-        #time.sleep(0.5)
+    for box in swBox:
+        print(30 * "=")
+        print("Blebox: ", box.device_adress)
+        print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
+        print("{}: {} ".format("Wifi Status", box.wifi_status()))
+        print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
+        print("{}: {} ".format("Relay Get", box.relay_state()))
+        print("{}: {} ".format("Switch State", box.switch_state()))
+        print("{}: {} ".format("Dev State", box.device_state()))
+        print("{}: {} ".format("Up Time", box.devive_uptime()))
 
