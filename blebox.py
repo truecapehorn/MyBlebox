@@ -108,7 +108,7 @@ if action_lamp is not None:     # przypisanie akcji gupowych dla lamp
     action_b = action_lamp
 action_all = results.action_all
 if action_all is not None:      # przypisanie akcji gupowych wszystkie
-    ction_hl = action_all
+    action_hl = action_all
     action_hp = action_all
     action_l = action_all
     action_b = action_all
