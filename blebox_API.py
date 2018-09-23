@@ -10,6 +10,12 @@ import sys
 # wifi_name = "ASUS_18_2G"
 # wifi_pwd = "501195121"
 
+class ContinueI(Exception):
+    pass
+
+
+continue_i = ContinueI()
+
 
 class Blebox():
     """
@@ -32,9 +38,9 @@ class Blebox():
             r = requests.get(url,timeout=3)
             #time.sleep(0.5)
             return r.json()
-        except requests.exceptions.Timeout or requests.exceptions.TooManyRedirects or requests.exceptions.RequestException as e:
+        except Exception as e:
             print(e)
-            sys.exit(1)
+            #sys.exit(0)
 
     def request_post(self, url, payload):
         '''Generacja requestu typu POST'''
@@ -42,9 +48,11 @@ class Blebox():
             r = requests.post(url, data=json.dumps(payload),timeout=3)
             time.sleep(0.5)
             return r.json()
-        except requests.exceptions.Timeout or requests.exceptions.TooManyRedirects or requests.exceptions.RequestException as e:
+        except Exception as e:
             print(e)
-            sys.exit(1)
+            #sys.exit(0)
+
+
 
     def response_status(self,action, r):
         '''Wydrukowanie wynikow'''
@@ -275,7 +283,7 @@ class SwichBoxD(Blebox):
 
 
 if __name__ == '__main__':
-    dev1 = '192.168.1.201'
+    dev1 = '192.168.1.204'
     dev2 = '192.168.1.202'
     dev3 = '192.168.1.203'
 
