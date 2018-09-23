@@ -63,8 +63,8 @@ parser.add_argument('-a', action='store', dest='action_lamp', type=str2bool,
                     help='Sterowanie zbiorcze dla oswietenia')
 parser.add_argument('-A', action='store', dest='action_all', type=str2bool,
                     help='Sterowanie zbiorcze wszystko')
-parser.add_argument('--state', action='store_true', default=False,
-                    dest='action_state',
+parser.add_argument('--status', action='store_true', default=False,
+                    dest='action_status',
                     help='Sprawdzenie stanow')
 
 parser.add_argument('--version', action='version', version='%(prog)s 1.2')
@@ -85,7 +85,7 @@ action_laz = results.action_laz
 
 action_lamp = results.action_lamp
 action_all = results.action_all
-action_state = results.action_state
+action_status = results.action_status
 actions = [action_hl, action_hp, action_l, action_b, action_p, action_w, action_lamp, action_all]
 
 
@@ -160,8 +160,8 @@ if action_all != None:
         print(relay_out(r, dev.noRelay))
 
 #   odczyt ststusow bleboxow
-if action_state == True:
-    print('sprawdzenie stanow', action_state)
+if action_status == True:
+    print('sprawdzenie stanow', action_status)
     for box in swBox:
         print(30 * "=")
         print("Blebox: ", box.device_adress)
