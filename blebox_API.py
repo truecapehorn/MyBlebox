@@ -10,13 +10,6 @@ import sys
 # wifi_name = "ASUS_18_2G"
 # wifi_pwd = "501195121"
 
-class ContinueI(Exception):
-    pass
-
-
-continue_i = ContinueI()
-
-
 class Blebox():
     """
     Obsluga Bleboxow
@@ -142,7 +135,7 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
-    def relay_set_post(self, state1, state2):
+    def relay_set_post(self, state1, state2,name1,name2):
         '''
             Relays - Change relays configuration. POST method
             TX:,RX:
@@ -162,12 +155,12 @@ class SwichBoxD(Blebox):
                     "relay": 0,
                     "state": state1,
                     "stateAfterRestart": 2,
-                    "name": "Q0"
+                    "name": name1
                 }, {
                     "relay": 1,
                     "state": state2,
                     "stateAfterRestart": 2,
-                    "name": "Q1"
+                    "name": name2
                 }]
         }
 
