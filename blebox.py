@@ -17,7 +17,6 @@ class Devices:
 
     def relaySet(self):
         if self.action is not None:
-            self.blebox.relay_set_get(self.noRelay, self.action)
             r = self.blebox.relay_set_get(self.noRelay, self.action)
         return r
 
@@ -101,13 +100,13 @@ action_mp = results.action_mp
 action_we = results.action_we
 action_laz = results.action_laz
 action_lamp = results.action_lamp
-if action_lamp is not None:     # przypisanie akcji gupowych dla lamp
+if action_lamp is not None:  # przypisanie akcji gupowych dla lamp
     action_hl = action_lamp
     action_hp = action_lamp
     action_l = action_lamp
     action_b = action_lamp
 action_all = results.action_all
-if action_all is not None:      # przypisanie akcji gupowych wszystkie
+if action_all is not None:  # przypisanie akcji gupowych wszystkie
     action_hl = action_all
     action_hp = action_all
     action_l = action_all
