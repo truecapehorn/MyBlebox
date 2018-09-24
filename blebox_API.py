@@ -135,7 +135,7 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
-    def relay_set_post(self, state1, state2,name1,name2):
+    def relay_set_post(self, state1, state2, name1, name2):
         '''
             Relays - Change relays configuration. POST method
             TX:,RX:
@@ -272,7 +272,7 @@ class SwichBoxD(Blebox):
 
 
 if __name__ == '__main__':
-    dev1 = '192.168.1.204'
+    dev1 = '192.168.1.201'
     dev2 = '192.168.1.202'
     dev3 = '192.168.1.203'
 
@@ -292,6 +292,7 @@ if __name__ == '__main__':
         print("{}: {} ".format("Dev State", box.device_state()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
         print("{}: {} ".format("Relay State", box.relay_state()))
+        print
     print("Uruchominie lampki")
     print(swBox2.relay_set_get(1, 1))
     time.sleep(5)
