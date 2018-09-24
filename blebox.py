@@ -145,7 +145,7 @@ k = Devices("Kuchnia", 0, action_k, kuchnia)
 mp = Devices("Mały pokój", 1, action_mp, kuchnia)
 
 we = Devices("Wejscie", 0, action_we, wejscie)
-laz = Devices("Łaźenka", 1, action_laz, wejscie)
+laz = Devices("Łazienka", 1, action_laz, wejscie)
 
 devs = [hl, hp, l, b, p, w]  # tablica klas z wszystkimi  urzadzeniami
 
