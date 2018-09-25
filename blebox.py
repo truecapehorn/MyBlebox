@@ -5,15 +5,19 @@ import textwrap
 
 
 class Devices:
-    devs = {}
 
     def __init__(self, name, noRelay, action, blebox):
+        '''
+        :param name: Nazwa wyjscia w bleboxie
+        :param noRelay: Numer wyjyjscia
+        :param action: akcja 1 LUB 0
+        :param blebox: obiekt klasy odwoujacej sie do klasy SwichBoxD
+        '''
+
         self.name = name
         self.noRelay = noRelay
         self.action = action
         self.blebox = blebox
-
-        # Devices.devs[self.name]=[self.noRelay,self.action,self.blebox]   # generacja  tablicy z urzadzeniami
 
     def relaySet(self):
         if self.action is not None:
@@ -171,4 +175,4 @@ if action_status == True:
         print("{}: {} ".format("Device network", box.device_network()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
         print("{}: {} ".format("Relay state", box.relay_state()))
-        print("!!!Koniec testu dla: ", box.device_adress, " ", 60 * "/\\","\n")
+        print("!!!Koniec testu dla: ", box.device_adress, " ", 60 * "/\\", "\n")
