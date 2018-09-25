@@ -105,6 +105,8 @@ if action_lamp is not None:  # przypisanie akcji gupowych dla lamp
     action_hp = action_lamp
     action_l = action_lamp
     action_b = action_lamp
+    action_k = action_lamp
+    action_mp = action_lamp
 action_all = results.action_all
 if action_all is not None:  # przypisanie akcji gupowych wszystkie
     action_hl = action_all
@@ -113,6 +115,8 @@ if action_all is not None:  # przypisanie akcji gupowych wszystkie
     action_b = action_all
     action_p = action_all
     action_w = action_all
+    action_k = action_all
+    action_mp = action_all
 action_status = results.action_status
 
 #   deklaracja numerow IP
@@ -129,7 +133,7 @@ lampki = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
 kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
-swBox = [halospoty, lampki, kotlownia]  # tablica z bleboxami
+swBox = [halospoty, lampki, kotlownia, kuchnia]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
 hl = Devices("Halospoty lewe", 0, action_hl, halospoty)
@@ -141,13 +145,13 @@ b = Devices("Biurko", 1, action_b, lampki)
 p = Devices("Piecyk", 0, action_p, kotlownia)
 w = Devices("Wiatrak", 1, action_w, kotlownia)
 
-k = Devices("Kuchnia", 0, action_k, kuchnia)
-mp = Devices("Mały pokój", 1, action_mp, kuchnia)
+k = Devices("Kuchnia", 1, action_k, kuchnia)
+mp = Devices("Mały pokój", 0, action_mp, kuchnia)
 
 we = Devices("Wejscie", 0, action_we, wejscie)
 laz = Devices("Łazienka", 1, action_laz, wejscie)
 
-devs = [hl, hp, l, b, p, w]  # tablica klas z wszystkimi  urzadzeniami
+devs = [hl, hp, l, b, p, w, k, mp]  # tablica obejektów z wszystkimi  urzadzeniami
 
 #   akcja dla przekaznikow
 for dev in devs:
@@ -169,4 +173,4 @@ if action_status == True:
         print("{}: {} ".format("Device network", box.device_network()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
         print("{}: {} ".format("Relay state", box.relay_state()))
-        print("!!!Koniec testu dla: ",box.device_adress)
+        print("!!!Koniec testu dla: ", box.device_adress, " ", 60 * "/\\")
