@@ -17,8 +17,7 @@ class Devices:
 
     def relaySet(self):
         if self.action is not None:
-            r = self.blebox.relay_set_get(self.noRelay, self.action)
-        return r
+            self.blebox.relay_set_get(self.noRelay, self.action)
 
 
 def str2bool(v):
@@ -157,8 +156,7 @@ devs = [hl, hp, l, b, p, w, k, mp]  # tablica obejektów z wszystkimi  urzadzeni
 for dev in devs:
     if dev.action is not None:
         print('{} - {}'.format(dev.name, dev.action))
-        r = dev.relaySet()
-        # print(relay_out(r, dev.noRelay))
+        dev.relaySet()
 
 #   odczyt ststusow bleboxow
 if action_status == True:
