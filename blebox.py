@@ -11,7 +11,7 @@ class Devices:
         :param name: Nazwa wyjscia w bleboxie
         :param noRelay: Numer wyjyjscia
         :param action: akcja 1 LUB 0
-        :param blebox: obiekt klasy odwoujacej sie do klasy SwichBoxD
+        :param blebox: obiekt odwoujacy sie do klasy SwichBoxD
         '''
 
         self.name = name
