@@ -132,6 +132,8 @@ if action_all is not None:  # przypisanie akcji gupowych wszystkie
 
 action_wejscie = results.action_wejscie
 if action_wejscie is not None:  # przypisanie akcji gupowych dla lamp wejsciowych
+    action_hl = action_wejscie
+    action_hp = action_wejscie
     action_k = action_wejscie
     action_mp = action_wejscie
     action_we = action_wejscie
