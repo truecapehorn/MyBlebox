@@ -182,4 +182,3 @@ if action_status == True:
         print("{}: {} ".format("Up Time", box.device_uptime()))
         print("{}: {} ".format("Relay state", box.relay_state()))
         print("!!!Koniec testu dla: ", box.device_adress, " ", 60 * "/\\", "\n")
-
