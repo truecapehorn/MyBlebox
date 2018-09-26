@@ -75,9 +75,9 @@ parser.add_argument('-mp', action='store', dest='action_mp', type=str2bool,
                     help='Sterowanie mały pokój')
 
 parser.add_argument('-we', action='store', dest='action_we', type=str2bool,
-                    help='Sterowanie wejście')
-parser.add_argument('-laz', action='store', dest='action_laz', type=str2bool,
-                    help='Sterowanie łazienka')
+                    help='Sterowanie holem')
+parser.add_argument('-zw', action='store', dest='action_zw', type=str2bool,
+                    help='Sterowanie oswietlenie zewnetrzne')
 
 parser.add_argument('-a', action='store', dest='action_lamp', type=str2bool,
                     help='Sterowanie zbiorcze dla oswietenia')
@@ -101,7 +101,7 @@ action_w = results.action_w
 action_k = results.action_k
 action_mp = results.action_mp
 action_we = results.action_we
-action_laz = results.action_laz
+action_zw = results.action_zw
 action_lamp = results.action_lamp
 if action_lamp is not None:  # przypisanie akcji gupowych dla lamp
     action_hl = action_lamp
@@ -110,6 +110,9 @@ if action_lamp is not None:  # przypisanie akcji gupowych dla lamp
     action_b = action_lamp
     action_k = action_lamp
     action_mp = action_lamp
+    action_we = action_lamp
+    action_zw = action_lamp
+
 action_all = results.action_all
 if action_all is not None:  # przypisanie akcji gupowych wszystkie
     action_hl = action_all
@@ -120,6 +123,9 @@ if action_all is not None:  # przypisanie akcji gupowych wszystkie
     action_w = action_all
     action_k = action_all
     action_mp = action_all
+    action_we = action_all
+    action_zw = action_all
+
 action_status = results.action_status
 
 #   deklaracja numerow IP
@@ -128,7 +134,7 @@ ip_lampki = '192.168.1.202'
 ip_kotlownia = '192.168.1.203'
 ip_kuchnia = "192.168.1.204"
 ip_wejscie = "192.168.1.205"
-ips = [ip_halospoty, ip_lampki, ip_kotlownia]  # tablica z ipkami
+ips = [ip_halospoty, ip_lampki, ip_kotlownia, ip_kuchnia, ip_wejscie]  # tablica z ipkami
 
 #   dodanie nowych urzadzen blebox
 halospoty = SwichBoxD(ip_halospoty)
@@ -136,7 +142,7 @@ lampki = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
 kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
-swBox = [halospoty, lampki, kotlownia, kuchnia]  # tablica z bleboxami
+swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
 hl = Devices("Halospoty lewe", 0, action_hl, halospoty)
@@ -151,10 +157,10 @@ w = Devices("Wiatrak", 1, action_w, kotlownia)
 k = Devices("Kuchnia", 1, action_k, kuchnia)
 mp = Devices("Mały pokój", 0, action_mp, kuchnia)
 
-we = Devices("Wejscie", 0, action_we, wejscie)
-laz = Devices("Łazienka", 1, action_laz, wejscie)
+we = Devices("Wejście", 0, action_we, wejscie)
+zw = Devices("Zewnetrzne", 1, action_zw, wejscie)
 
-devs = [hl, hp, l, b, p, w, k, mp]  # tablica obejektów z wszystkimi  urzadzeniami
+devs = [hl, hp, l, b, p, w, k, mp, we, zw]  # tablica obejektów z wszystkimi  urzadzeniami
 
 #   akcja dla przekaznikow
 for dev in devs:
@@ -176,3 +182,4 @@ if action_status == True:
         print("{}: {} ".format("Up Time", box.device_uptime()))
         print("{}: {} ".format("Relay state", box.relay_state()))
         print("!!!Koniec testu dla: ", box.device_adress, " ", 60 * "/\\", "\n")
+
