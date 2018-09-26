@@ -83,6 +83,9 @@ parser.add_argument('-a', action='store', dest='action_lamp', type=str2bool,
                     help='Sterowanie zbiorcze dla oswietenia')
 parser.add_argument('-A', action='store', dest='action_all', type=str2bool,
                     help='Sterowanie zbiorcze wszystko')
+parser.add_argument('-W', action='store', dest='action_wejscie', type=str2bool,
+                    help='Sterowanie zbiorcze lampy wejscie + kuchnia')
+
 parser.add_argument('--status', action='store_true', default=False,
                     dest='action_status',
                     help='Sprawdzenie stanow')
@@ -102,6 +105,7 @@ action_k = results.action_k
 action_mp = results.action_mp
 action_we = results.action_we
 action_zw = results.action_zw
+
 action_lamp = results.action_lamp
 if action_lamp is not None:  # przypisanie akcji gupowych dla lamp
     action_hl = action_lamp
@@ -125,6 +129,13 @@ if action_all is not None:  # przypisanie akcji gupowych wszystkie
     action_mp = action_all
     action_we = action_all
     action_zw = action_all
+
+action_wejscie = results.action_wejscie
+if action_wejscie is not None:  # przypisanie akcji gupowych dla lamp wejsciowych
+    action_k = action_wejscie
+    action_mp = action_wejscie
+    action_we = action_wejscie
+    action_zw = action_wejscie
 
 action_status = results.action_status
 
