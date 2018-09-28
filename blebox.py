@@ -86,62 +86,41 @@ parser.add_argument('-A', action='store', dest='action_all', type=str2bool,
 parser.add_argument('-W', action='store', dest='action_wejscie', type=str2bool,
                     help='Sterowanie zbiorcze lampy wejscie + kuchnia')
 
+parser.add_argument('-s', action='store', dest='action_salon', type=str2bool,
+                    help='Sterowanie zbiorcze lampy salon')
+
 parser.add_argument('--status', action='store_true', default=False,
                     dest='action_status',
                     help='Sprawdzenie stanow')
 
 parser.add_argument('--version', action='version', version='%(prog)s 1.2')
 
-results = parser.parse_args()  # pobranie rezultatow parsera
+actions = vars(parser.parse_args())  # pobranie wartosci akcji z namespace parasera w postaci slownika
 
-# odczyt akacji
-action_hl = results.action_hl
-action_hp = results.action_hp
-action_l = results.action_l
-action_b = results.action_b
-action_p = results.action_p
-action_w = results.action_w
-action_k = results.action_k
-action_mp = results.action_mp
-action_we = results.action_we
-action_zw = results.action_zw
+# zadeklarowanie akcji
+actionAll = ["action_hl", "action_hp", "action_l", "action_b", "action_p", "action_w", "action_k", "action_mp",
+             "action_we", "action_zw", ]
+actionLamps = ["action_hl", "action_hp", "action_l", "action_b", "action_k", "action_mp", "action_we", "action_zw", ]
+actionWejscie = ["action_hl", "action_hp", "action_k ", "action_mp", "action_we", "action_zw", ]
+actionSalon=["action_l", "action_b",]
 
-action_lamp = results.action_lamp
-if action_lamp is not None:  # przypisanie akcji gupowych dla lamp
-    action_hl = action_lamp
-    action_hp = action_lamp
-    action_l = action_lamp
-    action_b = action_lamp
-    action_k = action_lamp
-    action_mp = action_lamp
-    action_we = action_lamp
-    action_zw = action_lamp
+if actions["action_lamp"] is not None:  # przypisanie akcji gupowych dla lamp
+    for i in actionLamps:
+        actions[i] = actions["action_lamp"]
 
-action_all = results.action_all
-if action_all is not None:  # przypisanie akcji gupowych wszystkie
-    action_hl = action_all
-    action_hp = action_all
-    action_l = action_all
-    action_b = action_all
-    action_p = action_all
-    action_w = action_all
-    action_k = action_all
-    action_mp = action_all
-    action_we = action_all
-    action_zw = action_all
+if actions["action_all"] is not None:  # przypisanie akcji gupowych wszystkie
+    for i in actionAll:
+        actions[i] = actions["action_all"]
 
-action_wejscie = results.action_wejscie
-if action_wejscie is not None:  # przypisanie akcji gupowych dla lamp wejsciowych
-    action_hl = action_wejscie
-    action_hp = action_wejscie
-    action_k = action_wejscie
-    action_mp = action_wejscie
-    action_we = action_wejscie
-    action_zw = action_wejscie
+if actions["action_wejscie"] is not None:  # przypisanie akcji gupowych dla lamp wejsciowych
+    for i in actionWejscie:
+        actions[i] = actions["action_wejscie"]
 
-action_status = results.action_status
+if actions["action_salon"] is not None:
+    for i in actionSalon:
+        actions[i] = actions["action_salon"]
 
-#   deklaracja numerow IP
+# deklaracja numerow IP
 ip_halospoty = '192.168.1.201'
 ip_lampki = '192.168.1.202'
 ip_kotlownia = '192.168.1.203'
@@ -158,20 +137,20 @@ wejscie = SwichBoxD(ip_wejscie)
 swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
-hl = Devices("Halospoty lewe", 0, action_hl, halospoty)
-hp = Devices("Halospoty prawe", 1, action_hp, halospoty)
+hl = Devices("Halospoty lewe", 0, actions["action_hl"], halospoty)
+hp = Devices("Halospoty prawe", 1, actions["action_hp"], halospoty)
 
-l = Devices("Lampka nocna", 0, action_l, lampki)
-b = Devices("Biurko", 1, action_b, lampki)
+l = Devices("Lampka nocna", 0, actions["action_l"], lampki)
+b = Devices("Biurko", 1, actions["action_b"], lampki)
 
-p = Devices("Piecyk", 0, action_p, kotlownia)
-w = Devices("Wiatrak", 1, action_w, kotlownia)
+p = Devices("Piecyk", 0, actions["action_p"], kotlownia)
+w = Devices("Wiatrak", 1, actions["action_w"], kotlownia)
 
-k = Devices("Kuchnia", 1, action_k, kuchnia)
-mp = Devices("Mały pokój", 0, action_mp, kuchnia)
+k = Devices("Kuchnia", 1, actions["action_k"], kuchnia)
+mp = Devices("Mały pokój", 0, actions["action_mp"], kuchnia)
 
-we = Devices("Wejście", 0, action_we, wejscie)
-zw = Devices("Zewnetrzne", 1, action_zw, wejscie)
+we = Devices("Wejście", 0, actions["action_we"], wejscie)
+zw = Devices("Zewnetrzne", 1, actions["action_zw"], wejscie)
 
 devs = [hl, hp, l, b, p, w, k, mp, we, zw]  # tablica obejektów z wszystkimi  urzadzeniami
 
@@ -182,8 +161,8 @@ for dev in devs:
         dev.relaySet()
 
 #   odczyt ststusow bleboxow
-if action_status == True:
-    print('sprawdzenie stanow', action_status)
+if actions["action_status"] == True:
+    print('sprawdzenie stanow', actions["action_status"])
     for box in swBox:
         print(30 * "=")
         print("Blebox: ", box.device_adress)
