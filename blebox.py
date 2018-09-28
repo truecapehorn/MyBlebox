@@ -66,7 +66,7 @@ parser.add_argument('-b', action='store', dest='action_b', type=str2bool,
 
 parser.add_argument('-p', action='store', dest='action_p', type=str2bool,
                     help='Sterowanie piecyk')
-parser.add_argument('-w', action='store', dest='action_w', type=str2bool,
+parser.add_argument('-f', action='store', dest='action_f', type=str2bool,
                     help='Sterowanie wiatrak')
 
 parser.add_argument('-k', action='store', dest='action_k', type=str2bool,
@@ -79,13 +79,12 @@ parser.add_argument('-we', action='store', dest='action_we', type=str2bool,
 parser.add_argument('-zw', action='store', dest='action_zw', type=str2bool,
                     help='Sterowanie oswietlenie zewnetrzne')
 
-parser.add_argument('-a', action='store', dest='action_lamp', type=str2bool,
-                    help='Sterowanie zbiorcze dla oswietenia')
 parser.add_argument('-A', action='store', dest='action_all', type=str2bool,
                     help='Sterowanie zbiorcze wszystko')
-parser.add_argument('-W', action='store', dest='action_wejscie', type=str2bool,
+parser.add_argument('-a', action='store', dest='action_lamp', type=str2bool,
+                    help='Sterowanie zbiorcze dla oswietenia')
+parser.add_argument('-w', action='store', dest='action_wejscie', type=str2bool,
                     help='Sterowanie zbiorcze lampy wejscie + kuchnia')
-
 parser.add_argument('-s', action='store', dest='action_salon', type=str2bool,
                     help='Sterowanie zbiorcze lampy salon')
 
@@ -144,7 +143,7 @@ l = Devices("Lampka nocna", 0, actions["action_l"], lampki)
 b = Devices("Biurko", 1, actions["action_b"], lampki)
 
 p = Devices("Piecyk", 0, actions["action_p"], kotlownia)
-w = Devices("Wiatrak", 1, actions["action_w"], kotlownia)
+f = Devices("Wiatrak", 1, actions["action_f"], kotlownia)
 
 k = Devices("Kuchnia", 1, actions["action_k"], kuchnia)
 mp = Devices("Mały pokój", 0, actions["action_mp"], kuchnia)
@@ -152,7 +151,7 @@ mp = Devices("Mały pokój", 0, actions["action_mp"], kuchnia)
 we = Devices("Wejście", 0, actions["action_we"], wejscie)
 zw = Devices("Zewnetrzne", 1, actions["action_zw"], wejscie)
 
-devs = [hl, hp, l, b, p, w, k, mp, we, zw]  # tablica obejektów z wszystkimi  urzadzeniami
+devs = [hl, hp, l, b, p, f, k, mp, we, zw]  # tablica obejektów z wszystkimi  urzadzeniami
 
 #   akcja dla przekaznikow
 for dev in devs:
