@@ -102,21 +102,21 @@ actionAll = ["action_hl", "action_hp", "action_l", "action_b", "action_p", "acti
              "action_we", "action_zw", ]
 actionLamps = ["action_hl", "action_hp", "action_l", "action_b", "action_k", "action_mp", "action_we", "action_zw", ]
 actionWejscie = ["action_hl", "action_hp", "action_k ", "action_mp", "action_we", "action_zw", ]
-actionSalon=["action_l", "action_b",]
+actionSalon = ["action_l", "action_b", ]
 
-if actions["action_lamp"] is not None:  # przypisanie akcji gupowych dla lamp
+if actions["action_lamp"] is not None:  # przypisanie akcji gupowej dla wszystkich lamp
     for i in actionLamps:
         actions[i] = actions["action_lamp"]
 
-if actions["action_all"] is not None:  # przypisanie akcji gupowych wszystkie
+if actions["action_all"] is not None:  # przypisanie akcji gupowej wszystkie urzadzenia
     for i in actionAll:
         actions[i] = actions["action_all"]
 
-if actions["action_wejscie"] is not None:  # przypisanie akcji gupowych dla lamp wejsciowych
+if actions["action_wejscie"] is not None:  # przypisanie akcji gupowej dla lamp wejsciowych
     for i in actionWejscie:
         actions[i] = actions["action_wejscie"]
 
-if actions["action_salon"] is not None:
+if actions["action_salon"] is not None:  # przypisanie akcji gupowej dla lamp w salonie
     for i in actionSalon:
         actions[i] = actions["action_salon"]
 
