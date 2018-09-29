@@ -159,7 +159,7 @@ for dev in devs:
         print('{} - {}'.format(dev.name, dev.action))
         dev.relaySet()
 
-#   odczyt ststusow bleboxow
+#   odczyt statusow bleboxow
 if actions["action_status"] == True:
     print('sprawdzenie stanow', actions["action_status"])
     for box in swBox:
