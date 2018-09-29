@@ -1,6 +1,7 @@
 from lib.blebox_API import SwichBoxD
 import argparse
 import textwrap
+import time
 
 
 class Devices:
@@ -21,6 +22,7 @@ class Devices:
     def relaySet(self):
         if self.action is not None:
             self.blebox.relay_set_get(self.noRelay, self.action)
+            time.sleep(0.3)
 
 
 def str2bool(v):
@@ -86,7 +88,7 @@ parser.add_argument('-A ', action='store', dest='action_all', type=str2bool,
                     help='Sterowanie zbiorcze wszystko')
 parser.add_argument('-a ', action='store', dest='action_lamp', type=str2bool,
                     help='Sterowanie zbiorcze dla oswietenia')
-parser.add_argument('-w ', action='store', dest='action_wejscie', type=str2bool,
+parser.add_argument('-w', action='store', dest='action_wejscie', type=str2bool,
                     help='Sterowanie zbiorcze lampy wejscie + kuchnia')
 parser.add_argument('-s ', action='store', dest='action_salon', type=str2bool,
                     help='Sterowanie zbiorcze lampy salon')
@@ -99,11 +101,12 @@ parser.add_argument('--version ', action='version', version='%(prog)s 1.2')
 
 actions = vars(parser.parse_args())  # pobranie wartosci akcji z namespace parasera w postaci slownika
 
+
 # zadeklarowanie akcji grupowych
 actionAll = ["action_hl", "action_hp", "action_l", "action_b", "action_p", "action_w", "action_k", "action_mp",
              "action_we", "action_zw", ]
 actionLamps = ["action_hl", "action_hp", "action_l", "action_b", "action_k", "action_mp", "action_we", "action_zw", ]
-actionEnter = ["action_hl", "action_hp", "action_k ", "action_mp", "action_we", ]
+actionEnter = ["action_hl", "action_hp", "action_k", "action_mp", "action_we", ]
 actionSalon = ["action_l", "action_b", ]
 
 if actions["action_lamp"] is not None:  # przypisanie akcji gupowej dla wszystkich lamp
@@ -151,8 +154,8 @@ f = Devices("Wiatrak", 1, actions["action_f"], kotlownia)
 k = Devices("Kuchnia", 1, actions["action_k"], kuchnia)
 mp = Devices("Mały pokój", 0, actions["action_mp"], kuchnia)
 
-we = Devices("Wejście", 0, actions["action_we"], wejscie)
-zw = Devices("Zewnetrzne", 1, actions["action_zw"], wejscie)
+we = Devices("Wejście", 1, actions["action_we"], wejscie)
+zw = Devices("Zewnetrzne", 0, actions["action_zw"], wejscie)
 
 devs = [hl, hp, l, b, p, f, k, mp, we, zw]  # tablica obejektów z wszystkimi  urzadzeniami
 
