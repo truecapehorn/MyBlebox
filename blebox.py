@@ -38,8 +38,9 @@ def relay_out(r, nr_relay):
     except Exception as e:
         print(e)
 
-def status(name,status):
-    return print('{} : {}'.format(name,status))
+
+def status(name, status):
+    return print('{} : {}'.format(name, status))
 
 
 parser = argparse.ArgumentParser(
@@ -160,7 +161,6 @@ for dev in devs:
     if dev.action is not None:
         print('{} - {}'.format(dev.name, dev.action))
         dev.relaySet()
-
 
 #   odczyt statusow bleboxow
 if actions["action_status"] == True:
