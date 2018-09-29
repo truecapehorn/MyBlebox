@@ -54,45 +54,45 @@ parser = argparse.ArgumentParser(
         --------------------------------------------------------
         '''))
 
-parser.add_argument('-hl', action='store', dest='action_hl', type=str2bool,
+parser.add_argument('-hl ', action='store', dest='action_hl', type=str2bool,
                     help='Sterowanie halospoty lewe')
-parser.add_argument('-hp', action='store', dest='action_hp', type=str2bool,
+parser.add_argument('-hp ', action='store', dest='action_hp', type=str2bool,
                     help='Sterowanie halospoty prawe')
 
-parser.add_argument('-l', action='store', dest='action_l', type=str2bool,
+parser.add_argument('-l ', action='store', dest='action_l', type=str2bool,
                     help='Sterowanie lampka nocna')
-parser.add_argument('-b', action='store', dest='action_b', type=str2bool,
+parser.add_argument('-b ', action='store', dest='action_b', type=str2bool,
                     help='Sterowanie biurko')
 
-parser.add_argument('-p', action='store', dest='action_p', type=str2bool,
+parser.add_argument('-p ', action='store', dest='action_p', type=str2bool,
                     help='Sterowanie piecyk')
-parser.add_argument('-f', action='store', dest='action_f', type=str2bool,
+parser.add_argument('-f ', action='store', dest='action_f', type=str2bool,
                     help='Sterowanie wiatrak')
 
-parser.add_argument('-k', action='store', dest='action_k', type=str2bool,
+parser.add_argument('-k ', action='store', dest='action_k', type=str2bool,
                     help='Sterowanie kuchnia')
-parser.add_argument('-mp', action='store', dest='action_mp', type=str2bool,
+parser.add_argument('-mp ', action='store', dest='action_mp', type=str2bool,
                     help='Sterowanie mały pokój')
 
-parser.add_argument('-we', action='store', dest='action_we', type=str2bool,
+parser.add_argument('-we ', action='store', dest='action_we', type=str2bool,
                     help='Sterowanie holem')
-parser.add_argument('-zw', action='store', dest='action_zw', type=str2bool,
+parser.add_argument('-zw ', action='store', dest='action_zw', type=str2bool,
                     help='Sterowanie oswietlenie zewnetrzne')
 
-parser.add_argument('-A', action='store', dest='action_all', type=str2bool,
+parser.add_argument('-A ', action='store', dest='action_all', type=str2bool,
                     help='Sterowanie zbiorcze wszystko')
-parser.add_argument('-a', action='store', dest='action_lamp', type=str2bool,
+parser.add_argument('-a ', action='store', dest='action_lamp', type=str2bool,
                     help='Sterowanie zbiorcze dla oswietenia')
-parser.add_argument('-w', action='store', dest='action_wejscie', type=str2bool,
+parser.add_argument('-w ', action='store', dest='action_wejscie', type=str2bool,
                     help='Sterowanie zbiorcze lampy wejscie + kuchnia')
-parser.add_argument('-s', action='store', dest='action_salon', type=str2bool,
+parser.add_argument('-s ', action='store', dest='action_salon', type=str2bool,
                     help='Sterowanie zbiorcze lampy salon')
 
-parser.add_argument('--status', action='store_true', default=False,
+parser.add_argument('--status ', action='store_true', default=False,
                     dest='action_status',
                     help='Sprawdzenie stanow')
 
-parser.add_argument('--version', action='version', version='%(prog)s 1.2')
+parser.add_argument('--version ', action='version', version='%(prog)s 1.2')
 
 actions = vars(parser.parse_args())  # pobranie wartosci akcji z namespace parasera w postaci slownika
 
