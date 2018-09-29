@@ -103,7 +103,6 @@ actionLamps = ["action_hl", "action_hp", "action_l", "action_b", "action_k", "ac
 actionEnter = ["action_hl", "action_hp", "action_k ", "action_mp", "action_we", "action_zw", ]
 actionSalon = ["action_l", "action_b", ]
 
-
 if actions["action_lamp"] is not None:  # przypisanie akcji gupowej dla wszystkich lamp
     for i in actionLamps:
         actions[i] = actions["action_lamp"]
