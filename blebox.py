@@ -152,7 +152,6 @@ zw = Devices("Zewnetrzne", 1, actions["action_zw"], wejscie)
 
 devs = [hl, hp, l, b, p, f, k, mp, we, zw]  # tablica obejektów z wszystkimi  urzadzeniami
 
-
 #   akcja dla przekaznikow
 for dev in devs:
     if dev.action is not None:
