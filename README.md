@@ -1,8 +1,7 @@
 # MyBlebox
 Program do obslugi automatyki BleBox <br />
 
-  
-  ## O Programie
+## O Programie
 Uruchamianie programu z wiersza polecen <br />
 
 ##### dozwolone wartosci dla argumentow to:
@@ -28,7 +27,7 @@ Uruchamianie programu z wiersza polecen <br />
 *  --status            Sprawdzenie stanow
 *  --version           show program's version number and exit
 
-  ## Przykłady użycia
+## Przykłady użycia
   
 ```
 python3 blebox.py -b 1  # uruchominie w katalogu roboczym
