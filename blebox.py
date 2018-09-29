@@ -38,6 +38,9 @@ def relay_out(r, nr_relay):
     except Exception as e:
         print(e)
 
+def status(name,status):
+    return print('{} : {}'.format(name,status))
+
 
 parser = argparse.ArgumentParser(
     prog='BleBox',
@@ -158,17 +161,18 @@ for dev in devs:
         print('{} - {}'.format(dev.name, dev.action))
         dev.relaySet()
 
+
 #   odczyt statusow bleboxow
 if actions["action_status"] == True:
     print('sprawdzenie stanow', actions["action_status"])
     for box in swBox:
         print(30 * "=")
         print("Blebox: ", box.device_adress)
-        print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
-        print("{}: {} ".format("Wifi Status", box.wifi_status()))
-        print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Device state", box.device_state()))
-        print("{}: {} ".format("Device network", box.device_network()))
-        print("{}: {} ".format("Up Time", box.device_uptime()))
-        print("{}: {} ".format("Relay state", box.relay_state()))
-        print("!!!Koniec testu dla: ", box.device_adress, " ", 60 * "/\\", "\n")
+        status("WiFi Connect", box.wifi_connect())
+        status("Wifi Status", box.wifi_status())
+        status("Wifi Scan", box.wifi_scan())
+        status("Device state", box.device_state())
+        status("Device network", box.device_network())
+        status("Up Time", box.device_uptime())
+        status("Relay state", box.relay_state())
+        print("!!!Koniec testu dla: ", box.device_adress)
