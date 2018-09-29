@@ -97,8 +97,6 @@ parser.add_argument('--status ', action='store_true', default=False,
                     dest='action_status',
                     help='Sprawdzenie stanow')
 
-print("-w ")
-
 parser.add_argument('--version ', action='version', version='%(prog)s 1.2')
 
 actions = vars(parser.parse_args())  # pobranie wartosci akcji z namespace parasera w postaci slownika
