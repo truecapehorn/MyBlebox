@@ -22,7 +22,7 @@ class Devices:
     def relaySet(self):
         if self.action is not None:
             self.blebox.relay_set_get(self.noRelay, self.action)
-            time.sleep(0.3)
+            time.sleep(0)
 
 
 def str2bool(v):
