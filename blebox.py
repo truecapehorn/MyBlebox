@@ -101,7 +101,6 @@ parser.add_argument('--version ', action='version', version='%(prog)s 1.2')
 
 actions = vars(parser.parse_args())  # pobranie wartosci akcji z namespace parasera w postaci slownika
 
-
 # zadeklarowanie akcji grupowych
 actionAll = ["action_hl", "action_hp", "action_l", "action_b", "action_p", "action_w", "action_k", "action_mp",
              "action_we", "action_zw", ]
