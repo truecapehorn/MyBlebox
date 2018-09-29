@@ -280,6 +280,7 @@ if __name__ == '__main__':
     swBox2 = SwichBoxD(dev2)
     swBox3 = SwichBoxD(dev3)
     swBox = [swBox1, swBox2, swBox3]
+    print(swBox3.__doc__)
 
     for box in swBox:
         print(30 * "=")

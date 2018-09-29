@@ -100,7 +100,7 @@ actions = vars(parser.parse_args())  # pobranie wartosci akcji z namespace paras
 actionAll = ["action_hl", "action_hp", "action_l", "action_b", "action_p", "action_w", "action_k", "action_mp",
              "action_we", "action_zw", ]
 actionLamps = ["action_hl", "action_hp", "action_l", "action_b", "action_k", "action_mp", "action_we", "action_zw", ]
-actionEnter = ["action_hl", "action_hp", "action_k ", "action_mp", "action_we", "action_zw", ]
+actionEnter = ["action_hl", "action_hp", "action_k ", "action_mp", "action_we", ]
 actionSalon = ["action_l", "action_b", ]
 
 if actions["action_lamp"] is not None:  # przypisanie akcji gupowej dla wszystkich lamp
