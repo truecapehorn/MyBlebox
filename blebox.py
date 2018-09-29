@@ -1,5 +1,4 @@
-from blebox_API import SwichBoxD
-import time
+from lib.blebox_API import SwichBoxD
 import argparse
 import textwrap
 
