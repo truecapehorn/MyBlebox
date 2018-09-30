@@ -93,9 +93,29 @@ parser.add_argument('-w', action='store', dest='action_wejscie', type=str2bool,
 parser.add_argument('-s', action='store', dest='action_salon', type=str2bool,
                     help='Sterowanie zbiorcze lampy salon')
 
-parser.add_argument('--status ', action='store_true', default=False,
+parser.add_argument('--status', action='store_true', default=False,
                     dest='action_status',
                     help='Sprawdzenie stanow')
+
+parser.add_argument('--halospoty', action='store_true', default=False,
+                    dest='status_halospoty',
+                    help='Sprawdzenie statusu bleboxa kuchnia')
+
+parser.add_argument('--salon', action='store_true', default=False,
+                    dest='status_salon',
+                    help='Sprawdzenie statusu bleboxa kuchnia')
+
+parser.add_argument('--kotlownia', action='store_true', default=False,
+                    dest='status_kotlownia',
+                    help='Sprawdzenie statusu bleboxa kuchnia')
+
+parser.add_argument('--kuchnia', action='store_true', default=False,
+                    dest='status_kuchnia',
+                    help='Sprawdzenie statusu bleboxa kuchnia')
+
+parser.add_argument('--wejscie', action='store_true', default=False,
+                    dest='status_wejscie',
+                    help='Sprawdzenie statusu bleboxa kuchnia')
 
 parser.add_argument('--version ', action='version', version='%(prog)s 1.2')
 
@@ -134,18 +154,18 @@ ips = [ip_halospoty, ip_lampki, ip_kotlownia, ip_kuchnia, ip_wejscie]  # tablica
 
 #   dodanie nowych urzadzen blebox
 halospoty = SwichBoxD(ip_halospoty)
-lampki = SwichBoxD(ip_lampki)
+salon = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
 kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
-swBox = [halospoty, lampki, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
+swBox = [halospoty, salon, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
 hl = Devices("Halospoty lewe", 0, actions["action_hl"], halospoty)
 hp = Devices("Halospoty prawe", 1, actions["action_hp"], halospoty)
 
-l = Devices("Lampka nocna", 0, actions["action_l"], lampki)
-b = Devices("Biurko", 1, actions["action_b"], lampki)
+l = Devices("Lampka nocna", 0, actions["action_l"], salon)
+b = Devices("Biurko", 1, actions["action_b"], salon)
 
 p = Devices("Piecyk", 0, actions["action_p"], kotlownia)
 f = Devices("Wiatrak", 1, actions["action_f"], kotlownia)
@@ -164,17 +184,34 @@ for dev in devs:
         print('{} - {}'.format(dev.name, dev.action))
         dev.relaySet()
 
+statusy = {
+    "halospoty": [halospoty, actions["status_halospoty"]],
+    "salon": [salon, actions["status_salon"]],
+    "kotlownia": [kotlownia, actions["status_kotlownia"]],
+    "kuchnia": [kuchnia, actions["status_kuchnia"]],
+    "wejscie": [wejscie, actions["status_wejscie"]],
+}
+
 #   odczyt statusow bleboxow
+
 if actions["action_status"] == True:
-    print('sprawdzenie stanow', actions["action_status"])
-    for box in swBox:
-        print(30 * "=")
-        print("Blebox: ", box.device_adress)
-        status("WiFi Connect", box.wifi_connect())
-        status("Wifi Status", box.wifi_status())
-        status("Wifi Scan", box.wifi_scan())
-        status("Device state", box.device_state())
-        status("Device network", box.device_network())
-        status("Up Time", box.device_uptime())
-        status("Relay state", box.relay_state())
-        print("!!!Koniec testu dla: ", box.device_adress)
+    staty = []
+    for k, v in statusy.items():
+        if v[1] == True:
+            print("Relay state:", k)
+            for i in v[0].relay_state()['relays']:
+                print(i)
+            staty.append(v[1])
+    if staty == []:
+        print('sprawdzenie stanow', actions["action_status"])
+        for box in swBox:
+            print(30 * "=")
+            print("Blebox: ", box.device_adress)
+            status("WiFi Connect", box.wifi_connect())
+            status("Wifi Status", box.wifi_status())
+            status("Wifi Scan", box.wifi_scan())
+            status("Device state", box.device_state())
+            status("Device network", box.device_network())
+            status("Up Time", box.device_uptime())
+            status("Relay state", box.relay_state())
+            print("!!!Koniec testu dla: ", box.device_adress)
