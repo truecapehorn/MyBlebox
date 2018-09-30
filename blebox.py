@@ -158,7 +158,6 @@ salon = SwichBoxD(ip_lampki)
 kotlownia = SwichBoxD(ip_kotlownia)
 kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
-swBox = [halospoty, salon, kotlownia, kuchnia, wejscie]  # tablica z bleboxami
 
 #   deklaracja urzadzen dla bleboxow
 hl = Devices("Halospoty lewe", 0, actions["action_hl"], halospoty)
@@ -195,23 +194,23 @@ statusy = {
 #   odczyt statusow bleboxow
 
 if actions["action_status"] == True:
-    staty = [] # taka flaga jezeli tablica bedzie pusta to bedzie dzialac po staremu
+    staty = []  # taka flaga jezeli tablica bedzie pusta to bedzie dzialac po staremu
     for k, v in statusy.items():
         if v[1] == True:
             print("Relay state:", k)
-            for i in v[0].relay_state()['relays']: # kazdy status dla przekaznika osobnie
+            for i in v[0].relay_state()['relays']:  # kazdy status dla przekaznika osobnie
                 print(i)
-            staty.append(v[1]) # zapelnienie tablicy jezli bedzie spelniony wyjatek
+            staty.append(v[1])  # zapelnienie tablicy jezli bedzie spelniony wyjatek
     if staty == []:
         print('sprawdzenie stanow', actions["action_status"])
-        for box in swBox:
+        for box in statusy.values():
             print(30 * "=")
-            print("Blebox: ", box.device_adress)
-            status("WiFi Connect", box.wifi_connect())
-            status("Wifi Status", box.wifi_status())
-            status("Wifi Scan", box.wifi_scan())
-            status("Device state", box.device_state())
-            status("Device network", box.device_network())
-            status("Up Time", box.device_uptime())
-            status("Relay state", box.relay_state())
-            print("!!!Koniec testu dla: ", box.device_adress)
+            print("Blebox: ", box[0].device_adress)
+            status("WiFi Connect", box[0].wifi_connect())
+            status("Wifi Status", box[0].wifi_status())
+            status("Wifi Scan", box[0].wifi_scan())
+            status("Device state", box[0].device_state())
+            status("Device network", box[0].device_network())
+            status("Up Time", box[0].device_uptime())
+            status("Relay state", box[0].relay_state())
+            print("!!!Koniec testu dla: ", box[0].device_adress)
