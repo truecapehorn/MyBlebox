@@ -99,15 +99,15 @@ parser.add_argument('--status', action='store_true', default=False,
 
 parser.add_argument('--halospoty', action='store_true', default=False,
                     dest='status_halospoty',
-                    help='Sprawdzenie statusu bleboxa kuchnia')
+                    help='Sprawdzenie statusu bleboxa halospoty')
 
 parser.add_argument('--salon', action='store_true', default=False,
                     dest='status_salon',
-                    help='Sprawdzenie statusu bleboxa kuchnia')
+                    help='Sprawdzenie statusu bleboxa salon')
 
 parser.add_argument('--kotlownia', action='store_true', default=False,
                     dest='status_kotlownia',
-                    help='Sprawdzenie statusu bleboxa kuchnia')
+                    help='Sprawdzenie statusu bleboxa kotlownia')
 
 parser.add_argument('--kuchnia', action='store_true', default=False,
                     dest='status_kuchnia',
@@ -115,7 +115,7 @@ parser.add_argument('--kuchnia', action='store_true', default=False,
 
 parser.add_argument('--wejscie', action='store_true', default=False,
                     dest='status_wejscie',
-                    help='Sprawdzenie statusu bleboxa kuchnia')
+                    help='Sprawdzenie statusu bleboxa wejscie')
 
 parser.add_argument('--version ', action='version', version='%(prog)s 1.2')
 

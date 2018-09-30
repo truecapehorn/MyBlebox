@@ -9,23 +9,31 @@ Uruchamianie programu z wiersza polecen <br />
 * dla wyłączenia przekaźnika:  ('no', 'false', 'off', 'n', '0')
     
 ##### argumenty opcjonalne:
-*  -h, --help          show this help message and exit
-*  -hl  ACTION_HL      Sterowanie halospoty lewe
-*  -hp  ACTION_HP      Sterowanie halospoty prawe
-*  -l  ACTION_L        Sterowanie lampka nocna
-*  -b  ACTION_B        Sterowanie biurko
-*  -p  ACTION_P        Sterowanie piecyk
-*  -f  ACTION_F        Sterowanie wiatrak
-*  -k  ACTION_K        Sterowanie kuchnia
-*  -mp  ACTION_MP      Sterowanie mały pokój
-*  -we  ACTION_WE      Sterowanie holem
-*  -zw  ACTION_ZW      Sterowanie oswietlenie zewnetrzne
-*  -A  ACTION_ALL      Sterowanie zbiorcze wszystko
-*  -a  ACTION_LAMP     Sterowanie zbiorcze dla oswietenia
-*  -w  ACTION_WEJSCIE  Sterowanie zbiorcze lampy wejscie + kuchnia
-*  -s  ACTION_SALON    Sterowanie zbiorcze lampy salon
-*  --status            Sprawdzenie stanow
-*  --version           show program's version number and exit
+*  -h, --help         show this help message and exit
+*  -hl ACTION_HL      Sterowanie halospoty lewe
+*  -hp ACTION_HP      Sterowanie halospoty prawe
+*  -l ACTION_L        Sterowanie lampka nocna
+*  -b ACTION_B        Sterowanie biurko
+*  -p ACTION_P        Sterowanie piecyk
+*  -f ACTION_F        Sterowanie wiatrak
+*  -k ACTION_K        Sterowanie kuchnia
+*  -mp ACTION_MP      Sterowanie mały pokój
+*  -we ACTION_WE      Sterowanie holem
+*  -zw ACTION_ZW      Sterowanie oswietlenie zewnetrzne
+*  -A ACTION_ALL      Sterowanie zbiorcze wszystko
+*  -a ACTION_LAMP     Sterowanie zbiorcze dla oswietenia
+*  -w ACTION_WEJSCIE  Sterowanie zbiorcze lampy wejscie + kuchnia
+*  -s ACTION_SALON    Sterowanie zbiorcze lampy salon
+######Statusy
+    
+   *  --status           Sprawdzenie stanow
+   *  --halospoty        Sprawdzenie statusu bleboxa halospoty
+   *  --salon            Sprawdzenie statusu bleboxa salon
+   *  --kotlownia        Sprawdzenie statusu bleboxa kotlownia
+   *  --kuchnia          Sprawdzenie statusu bleboxa kuchnia
+   *  --wejscie          Sprawdzenie statusu bleboxa wejscie
+   *  --version          show program's version number and exit
+
 
 ## Przykłady użycia
   
