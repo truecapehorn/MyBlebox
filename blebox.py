@@ -195,13 +195,13 @@ statusy = {
 #   odczyt statusow bleboxow
 
 if actions["action_status"] == True:
-    staty = []
+    staty = [] # taka flaga jezeli tablica bedzie pusta to bedzie dzialac po staremu
     for k, v in statusy.items():
         if v[1] == True:
             print("Relay state:", k)
-            for i in v[0].relay_state()['relays']:
+            for i in v[0].relay_state()['relays']: # kazdy status dla przekaznika osobnie
                 print(i)
-            staty.append(v[1])
+            staty.append(v[1]) # zapelnienie tablicy jezli bedzie spelniony wyjatek
     if staty == []:
         print('sprawdzenie stanow', actions["action_status"])
         for box in swBox:
