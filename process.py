@@ -34,18 +34,49 @@ kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
 
 
-while True:
+def check():
     hl = halospoty.relay_state()['relays'][0]['state']
     hp = halospoty.relay_state()['relays'][1]['state']
-    print("halospoty wylaczone",hl,hp)
-    if hl ==1 or hp==1 :
+    print(hl,hp)
+    time.sleep(2)
+    if hp==1 or hl==1:
+        return True
 
-        print(hl)
-        print(hp)
-        wejscie.relay_set_get(1,1)
-        time.sleep(5)
-        wejscie.relay_set_get(1,0)
-        time.sleep(5)
-    else:
-        wejscie.relay_set_get(1, 0)
-    time.sleep(3)
+
+from threading import Thread
+from time import sleep
+
+seconds=30
+# Function to be called when the timer expires
+def myFunction():
+    halospoty.relay_set_get(1,0)
+    halospoty.relay_set_get(0,0)
+
+# Function with the timer
+def myTimer(seconds):
+    sleep(seconds)
+    myFunction()
+
+# Thread that will sleep in background and call your function
+# when the timer expires.
+myThread = Thread(target=myTimer, args=(4,))
+myThread.start()
+
+while True:
+    status=check()
+    print(status)
+    if status==True:
+        myThread = Thread(target=myTimer, args=(4,))
+        myThread.start()
+
+
+
+
+
+
+
+
+
+
+
+
