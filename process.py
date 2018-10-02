@@ -86,4 +86,4 @@ while True:
     print("Program glowny")
     for i in range(1, 5):
         print(i)
-        time.sleep(0.1)
+        time.sleep(0.0)
