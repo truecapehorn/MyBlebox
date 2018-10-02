@@ -24,7 +24,7 @@ a=RepeatableTimer(3,hello)
 for i in range(1,5):
     print(i)
     a.start()
-    time.sleep(4)
+    time.sleep(1)
     if i == 3:
         a.stop()
     a.alive()

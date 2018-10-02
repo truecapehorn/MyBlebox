@@ -9,12 +9,12 @@ class RepeatableTimer(object):
         self._args = args
         self._kwargs = kwargs
     def start(self):
-        self.t = Timer(self._interval, self._function, *self._args, **self._kwargs)
-        self.t.start()
-    def stop(self):
-        self.t.cancel()
-    def alive(self):
-        self.t.is_alive()
+        t = Timer(self._interval, self._function, *self._args, **self._kwargs)
+        t.start()
+        return t.isAlive()
+
+
+
 
 def set_proc_name(newname):
     from ctypes import cdll, byref, create_string_buffer
@@ -55,7 +55,7 @@ def check():
     hl = halospoty.relay_state()['relays'][0]['state']
     hp = halospoty.relay_state()['relays'][1]['state']
     print(hl, hp)
-    time.sleep(2)
+    time.sleep(0)
     if hp == 1 or hl == 1:
         return True
     else:return False
@@ -71,17 +71,19 @@ def halospotyOff():
     halospoty.relay_set_get(0, 0)
 
 
-a=RepeatableTimer(5,halospotyOff)
 
+t=RepeatableTimer(5,halospotyOff)
+a=False
 
 while True:
     print('status?', check())
-    print(a.alive())
-    if check()==True:
-        a.start()
+    if check()==True and a==False:
+        a=t.start()
         print('a start')
+    elif check()==False:
+        a=False
 
     print("Program glowny")
     for i in range(1, 5):
         print(i)
-        time.sleep(1)
+        time.sleep(0.1)
