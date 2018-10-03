@@ -1,18 +1,25 @@
 from lib.blebox_API import SwichBoxD
 import time
 from threading import Timer
+import threading
+from datetime import datetime
 
 class RepeatableTimer(object):
+    blok=False
+
     def __init__(self, interval, function, args=[], kwargs={}):
         self._interval = interval
         self._function = function
         self._args = args
         self._kwargs = kwargs
-    def start(self):
-        t = Timer(self._interval, self._function, *self._args, **self._kwargs)
-        t.start()
-        return t.isAlive()
 
+
+    def start(self):
+        if self.blok==False:
+            self.t = Timer(self._interval, self._function, *self._args, **self._kwargs)
+            self.t.start()
+            print("t start")
+        self.blok=self.t.is_alive()
 
 
 
@@ -54,7 +61,7 @@ wejscie = SwichBoxD(ip_wejscie)
 def check():
     hl = halospoty.relay_state()['relays'][0]['state']
     hp = halospoty.relay_state()['relays'][1]['state']
-    print(hl, hp)
+    #print(hl, hp)
     time.sleep(0)
     if hp == 1 or hl == 1:
         return True
@@ -73,17 +80,11 @@ def halospotyOff():
 
 
 t=RepeatableTimer(5,halospotyOff)
-a=False
 
+start_time=0
 while True:
-    print('status?', check())
-    if check()==True and a==False:
-        a=t.start()
-        print('a start')
-    elif check()==False:
-        a=False
-
-    print("Program glowny")
-    for i in range(1, 5):
-        print(i)
-        time.sleep(0.0)
+    #print('status?', check())
+    if check()==True:
+        t.start()
+    #print("Program glowny")
+    time.sleep(0.0)

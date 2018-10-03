@@ -1,42 +1,26 @@
-
-from __future__ import print_function
-
-
-from threading import Timer
+from threading import Timer,Thread,Event
 
 
-def hello():
-    print("Hello World!")
+class perpetualTimer():
 
+   def __init__(self,t,hFunction):
+      self.t=t
+      self.hFunction = hFunction
+      self.thread = Timer(self.t,self.handle_function)
 
-class RepeatingTimer(object):
+   def handle_function(self):
+      self.hFunction()
+      self.thread = Timer(self.t,self.handle_function)
+      self.thread.start()
 
-    def __init__(self, interval, f, *args, **kwargs):
-        self.interval = interval
-        self.f = f
-        self.args = args
-        self.kwargs = kwargs
+   def start(self):
+      self.thread.start()
 
-        self.timer = None
+   def cancel(self):
+      self.thread.cancel()
 
+def printer():
+    print ('ipsem lorem')
 
-    def callback(self):
-        self.f(*self.args, **self.kwargs)
-        self.start()
-
-    def cancel(self):
-        self.timer.cancel()
-
-    def start(self):
-        self.timer = Timer(self.interval,self.f)
-        self.timer.start()
-    def run(self):
-        self.timer.run()
-
-
-
-t = RepeatingTimer(3, hello)
-print(t.run())
+t = perpetualTimer(5,printer)
 t.start()
-print("d")
-print(t.run())
