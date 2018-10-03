@@ -4,8 +4,9 @@ from threading import Timer
 import threading
 from datetime import datetime
 
+
 class RepeatableTimer(object):
-    blok=False
+    blok = False
 
     def __init__(self, interval, function, args=[], kwargs={}):
         self._interval = interval
@@ -13,14 +14,12 @@ class RepeatableTimer(object):
         self._args = args
         self._kwargs = kwargs
 
-
     def start(self):
-        if self.blok==False:
+        if self.blok == False:
             self.t = Timer(self._interval, self._function, *self._args, **self._kwargs)
             self.t.start()
             print("t start")
-        self.blok=self.t.is_alive()
-
+        self.blok = self.t.is_alive()
 
 
 def set_proc_name(newname):
@@ -61,11 +60,12 @@ wejscie = SwichBoxD(ip_wejscie)
 def check():
     hl = halospoty.relay_state()['relays'][0]['state']
     hp = halospoty.relay_state()['relays'][1]['state']
-    #print(hl, hp)
+    # print(hl, hp)
     time.sleep(0)
     if hp == 1 or hl == 1:
         return True
-    else:return False
+    else:
+        return False
 
 
 # Function to be called when the timer expires
@@ -74,14 +74,13 @@ def halospotyOff():
     halospoty.relay_set_get(0, 0)
 
 
+t = RepeatableTimer(5, halospotyOff)
 
-t=RepeatableTimer(5,halospotyOff)
-
-start_time=0
+start_time = 0
 while True:
-    #print('status?', check())
-    if check()==True:
+    # print('status?', check())
+    if check() == True:
         t.start()
-    #print("Program glowny")
+    # print("Program glowny")
     time.sleep(0.0)
     print(t.blok)
