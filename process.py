@@ -68,10 +68,6 @@ def check():
     else:return False
 
 
-
-seconds = 5
-
-
 # Function to be called when the timer expires
 def halospotyOff():
     halospoty.relay_set_get(1, 0)
