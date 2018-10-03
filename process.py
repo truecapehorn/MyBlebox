@@ -88,3 +88,4 @@ while True:
         t.start()
     #print("Program glowny")
     time.sleep(0.0)
+    print(t.blok)
