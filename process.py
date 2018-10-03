@@ -73,7 +73,6 @@ def halospotyOff():
     halospoty.relay_set_get(1, 0)
     halospoty.relay_set_get(0, 0)
 
-
 t = RepeatableTimer(5, halospotyOff)
 
 start_time = 0
