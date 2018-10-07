@@ -6,20 +6,26 @@ from datetime import datetime
 
 
 class RepeatableTimer(object):
-    blok = False
+    # blok = False
 
-    def __init__(self, interval, function, args=[], kwargs={}):
+    def __init__(self, interval, function, args=[], kwargs={},):
         self._interval = interval
         self._function = function
         self._args = args
         self._kwargs = kwargs
 
+
+
+
     def start(self):
-        if self.blok == False:
-            self.t = Timer(self._interval, self._function, *self._args, **self._kwargs)
-            self.t.start()
-            print("t start")
-        self.blok = self.t.is_alive()
+
+
+
+    def timerON(self):
+        self.t = Timer(self._interval, self._function, *self._args, **self._kwargs)
+        self.t.start()
+        print("t start")
+
 
 
 def set_proc_name(newname):
@@ -57,7 +63,7 @@ kuchnia = SwichBoxD(ip_kuchnia)
 wejscie = SwichBoxD(ip_wejscie)
 
 
-def check():
+def checkHalospoty():
     hl = halospoty.relay_state()['relays'][0]['state']
     hp = halospoty.relay_state()['relays'][1]['state']
     # print(hl, hp)
@@ -68,18 +74,34 @@ def check():
         return False
 
 
+def buyrko():
+    biurko = salon.relay_state()['relays'][1]['state']
+    time.sleep(0)
+    if biurko == 1:
+        return True
+    else:
+        return False
+
+
 # Function to be called when the timer expires
 def halospotyOff():
     halospoty.relay_set_get(1, 0)
     halospoty.relay_set_get(0, 0)
 
-t = RepeatableTimer(5, halospotyOff)
 
-start_time = 0
+def biurkoOff():
+    salon.relay_set_get(1, 0)
+
+
+t1 = RepeatableTimer(5, halospotyOff)
+t2 = RepeatableTimer(10, biurkoOff)
+
 while True:
     # print('status?', check())
-    if check() == True:
-        t.start()
+    if checkHalospoty() == True:
+        t1.start()
+    if biurkoOff() == True:
+        t2.start()
     # print("Program glowny")
     time.sleep(0.0)
-    print(t.blok)
+    print(t2.blok)
