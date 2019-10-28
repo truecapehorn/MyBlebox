@@ -135,7 +135,7 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
-    def relay_set_post(self, state1, state2, name1, name2):
+    def _relay_set_post(self, state1, state2, name1, name2):
         '''
             Relays - Change relays configuration. POST method
             TX:,RX:
@@ -166,7 +166,7 @@ class SwichBoxD(Blebox):
 
         return self.request_post(url, payload)  # POST
 
-    def relay_set_get(self, relay, state):
+    def _relay_set_get(self, relay, state):
         '''
             Relays - Change relays configuration. GET method
             RX:
@@ -181,7 +181,7 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
-    def relay_state(self):
+    def _relay_state(self):
         '''
             Relays - Get information about relays
             RX:
@@ -196,7 +196,7 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
-    def switch_state(self):
+    def _switch_state(self):
         '''
             Switch - Get information about switch configuration
             "outputMode": Current value of relation between output relays.
@@ -270,16 +270,37 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
+class TempSensor(SwichBoxD):
+
+    def getData(self):
+        '''
+        tempSensor - Get data from tempSensor
+        '''
+        # ADRESS
+        api_adress = '/api/tempsensor/state'
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
+
+
 
 if __name__ == '__main__':
     dev1 = '192.168.1.201'
     dev2 = '192.168.1.202'
     dev3 = '192.168.1.203'
+    dev4 = '192.168.1.204'
+    dev5 = '192.168.1.205'
+    dev6 = '192.168.1.206'
 
     swBox1 = SwichBoxD(dev1)
     swBox2 = SwichBoxD(dev2)
     swBox3 = SwichBoxD(dev3)
-    swBox = [swBox1, swBox2, swBox3]
+    swBox4 = SwichBoxD(dev4)
+    swBox5 = SwichBoxD(dev5)
+
+    tempSensor1 = TempSensor(dev6)
+
+    swBox = [swBox1, swBox2, swBox3, swBox4, swBox5]
+    tempSensor = [tempSensor1]
     print(swBox3.__doc__)
 
     for box in swBox:
@@ -288,13 +309,28 @@ if __name__ == '__main__':
         print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
         print("{}: {} ".format("Wifi Status", box.wifi_status()))
         print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Relay Get", box.relay_state()))
-        print("{}: {} ".format("Switch State", box.switch_state()))
+        print("{}: {} ".format("Relay Get", box._relay_state()))
+        print("{}: {} ".format("Switch State", box._switch_state()))
         print("{}: {} ".format("Dev State", box.device_state()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
-        print("{}: {} ".format("Relay State", box.relay_state()))
+        print("{}: {} ".format("Relay State", box._relay_state()))
         print("Koniec testu dla, ",box.device_adress)
-    print("Uruchominie lampki")
-    print(swBox2.relay_set_get(1, 1))
+
+
+    for temp in tempSensor:
+            print(30 * "=")
+            print("Temp Sensor: ", temp.device_adress)
+            print("{}: {}".format("Device Data",temp.getData()))
+            print("{}: {} ".format("WiFi Connect", temp.wifi_connect()))
+            print("{}: {} ".format("Wifi Status", temp.wifi_status()))
+            print("{}: {} ".format("Wifi Scan", temp.wifi_scan()))
+            print("{}: {} ".format("Dev State", temp.device_state()))
+            print("{}: {} ".format("Up Time", temp.device_uptime()))
+            print("Koniec testu dla, ",temp.device_adress)
+
+    print(30 * "=",'\n',"Uruchominie lampki")
+    print(swBox2._relay_set_get(1, 1))
     time.sleep(5)
-    swBox2.relay_set_get(1, 0)
+    swBox2._relay_set_get(1, 0)
+        
+
