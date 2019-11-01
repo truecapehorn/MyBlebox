@@ -4,9 +4,6 @@
 import json
 import time
 import requests
-import concurrent.futures
-
-import sys
 
 
 # wifi_name = "ASUS_18_2G"
@@ -298,49 +295,36 @@ if __name__ == '__main__':
     swBox3 = SwichBoxD(dev3)
     swBox4 = SwichBoxD(dev4)
     swBox5 = SwichBoxD(dev5)
-
     tempSensor1 = TempSensor(dev6)
 
-    swBox = [swBox1, swBox2, swBox3, swBox4, swBox5]
+    swBox = [swBox1, swBox2, swBox3, swBox4, swBox5,tempSensor1]
     tempSensor = [tempSensor1]
     print(swBox3.__doc__)
 
     for box in swBox:
         print(30 * "=")
-        print("Blebox: ", box.device_adress)
+        dev_adress=box.device_adress
+        print("Blebox adress: ", dev_adress)
         print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
         print("{}: {} ".format("Wifi Status", box.wifi_status()))
         print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Relay Get", box._relay_state()))
-        print("{}: {} ".format("Switch State", box._switch_state()))
         print("{}: {} ".format("Dev State", box.device_state()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
-        print("{}: {} ".format("Relay State", box._relay_state()))
-        print("Koniec testu dla, ",box.device_adress)
-
-
-    for temp in tempSensor:
-            print(30 * "=")
-            print("Temp Sensor: ", temp.device_adress)
-            print("{}: {}".format("Device Data",temp.getData()))
-            print("{}: {} ".format("WiFi Connect", temp.wifi_connect()))
-            print("{}: {} ".format("Wifi Status", temp.wifi_status()))
-            print("{}: {} ".format("Wifi Scan", temp.wifi_scan()))
-            print("{}: {} ".format("Dev State", temp.device_state()))
-            print("{}: {} ".format("Up Time", temp.device_uptime()))
-            print("Koniec testu dla, ",temp.device_adress)
+        if dev_adress == '192.168.1.206':
+            print("Temp Sensor data: ", box.getData())
+        else:
+            print("{}: {} ".format("Relay Get", box._relay_state()))
+            print("{}: {} ".format("Switch State", box._switch_state()))
+            print("{}: {} ".format("Relay State", box._relay_state()))
+        print("Koniec testu dla, ",dev_adress)
 
     print(30 * "=",'\n',"Uruchominie lampki")
     print(swBox2._relay_set_get(1, 1))
     time.sleep(5)
-    swBox2._relay_set_get(1, 0)
-
-    def print_somethink(cos):
-        return print("{}: {} ".format(cos[0], cos[1]))
+    print(swBox2._relay_set_get(1, 0))
 
 
-    # with concurrent.futures.ThreadPoolExecutor() as executor:
-    #     akcje=[["Blebox adress",box.device_adress]]
+
 
 
 
