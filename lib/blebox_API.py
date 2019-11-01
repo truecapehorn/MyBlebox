@@ -4,6 +4,7 @@
 import json
 import time
 import requests
+import random
 
 
 # wifi_name = "ASUS_18_2G"
@@ -28,8 +29,8 @@ class Blebox():
         '''Generacja requestu typu GET'''
         try:
             r = requests.get(url, timeout=3)
-            # time.sleep(0.5)
-            return r.json()
+            packages_json=r.json()
+            return packages_json
         except Exception as e:
             print(e)
             # sys.exit(0)
@@ -58,8 +59,8 @@ class Blebox():
         print('<!---------koniec-----------!>')
 
 
-class SwichBoxD(Blebox):
-    '''Clasa opisujaca moduły SwichBoxD dziedziczy z klasy Blebox'''
+class BoxStat(Blebox):
+    '''Moduły wspólne'''
 
     def device_set(self):
         '''Device - Change device configuration
@@ -134,6 +135,73 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
+    def wifi_connect(self):
+        '''
+            WiFi - Connect to WiFi network
+            TX:
+                "ssid":Name of WiFi network we want to connect.
+                "pwd":Password of WiFi network we want to connect.
+                        For open network this parameter should be an empty string.
+            RX:
+                "ssid": Name of connected WiFi network.
+                "station_status": Status of current conection with WiFi network. Where:
+                        0 - Not configured, 1 - Connecting, 2 - Wrong password,
+                        3 - WiFi network not found, 4 - Error, 5 - Connected.,
+                "ip":  	Device's IP in WiFi network.
+        '''
+        # ADRESS
+        api_adress = '/api/wifi/connect'
+        url = self.makeUrl(api_adress)
+        # POSTDATA
+        payload = {"ssid": self.wifi_name, "pwd": self.wifi_pwd}
+        return self.request_post(url, payload)  # POST
+
+    def wifi_disconnect(self):
+        '''
+            WiFi - Disconnect from WiFi network
+        '''
+        # ADRESS
+        api_adress = '/api/wifi/disconnect'
+        url = self.makeUrl(api_adress)
+        # POSTDATA
+        payload = {}
+        return self.request_post(url, payload)  # POST
+
+    def wifi_status(self):
+        '''
+            WiFi - Get information about connection to WiFi network
+            RX:
+            "scanning": Is scanning for WiFi networks in progress.,
+            "ssid": Name of connected WiFi network.,
+            "station_status": Status   of current conection with WiFi network. Where:
+                            0 - Not configured, 1 - Connecting,
+                            2 - Wrong password, 3 - WiFi network not found,
+                            4 - Error, 5 - Connected.,
+            "ip": Device's IP in WiFi network.
+        '''
+        # ADRESS
+        api_adress = '/api/wifi/status'
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
+
+    def wifi_scan(self):
+        '''
+            WiFi - Get nearby WiFi networks list
+            RX:
+            "ssid": Name of WiFi network.,
+            "rssi": Signal strength of WiFi network (0-255)
+            "enc": Encrytption of Wifi Network. Where: 0 - Not encrypted.
+        '''
+        # ADRESS
+        api_adress = '/api/wifi/scan'
+        url = self.makeUrl(api_adress)
+        return self.request_get(url)  # GET
+
+class SwichBoxD(BoxStat):
+    """
+    Moduł SwichboxD
+    """
+
     def _relay_set_post(self, state1, state2, name1, name2):
         '''
             Relays - Change relays configuration. POST method
@@ -207,71 +275,15 @@ class SwichBoxD(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
-    def wifi_connect(self):
-        '''
-            WiFi - Connect to WiFi network
-            TX:
-                "ssid":Name of WiFi network we want to connect.
-                "pwd":Password of WiFi network we want to connect.
-                        For open network this parameter should be an empty string.
-            RX:
-                "ssid": Name of connected WiFi network.
-                "station_status": Status of current conection with WiFi network. Where:
-                        0 - Not configured, 1 - Connecting, 2 - Wrong password,
-                        3 - WiFi network not found, 4 - Error, 5 - Connected.,
-                "ip":  	Device's IP in WiFi network.
-        '''
-        # ADRESS
-        api_adress = '/api/wifi/connect'
-        url = self.makeUrl(api_adress)
-        # POSTDATA
-        payload = {"ssid": self.wifi_name, "pwd": self.wifi_pwd}
-        return self.request_post(url, payload)  # POST
 
-    def wifi_disconnect(self):
-        '''
-            WiFi - Disconnect from WiFi network
-        '''
-        # ADRESS
-        api_adress = '/api/wifi/disconnect'
-        url = self.makeUrl(api_adress)
-        # POSTDATA
-        payload = {}
-        return self.request_post(url, payload)  # POST
 
-    def wifi_status(self):
-        '''
-            WiFi - Get information about connection to WiFi network
-            RX:
-            "scanning": Is scanning for WiFi networks in progress.,
-            "ssid": Name of connected WiFi network.,
-            "station_status": Status   of current conection with WiFi network. Where:
-                            0 - Not configured, 1 - Connecting,
-                            2 - Wrong password, 3 - WiFi network not found,
-                            4 - Error, 5 - Connected.,
-            "ip": Device's IP in WiFi network.
-        '''
-        # ADRESS
-        api_adress = '/api/wifi/status'
-        url = self.makeUrl(api_adress)
-        return self.request_get(url)  # GET
 
-    def wifi_scan(self):
-        '''
-            WiFi - Get nearby WiFi networks list
-            RX:
-            "ssid": Name of WiFi network.,
-            "rssi": Signal strength of WiFi network (0-255)
-            "enc": Encrytption of Wifi Network. Where: 0 - Not encrypted.
-        '''
-        # ADRESS
-        api_adress = '/api/wifi/scan'
-        url = self.makeUrl(api_adress)
-        return self.request_get(url)  # GET
+class TempSensor(BoxStat):
+    '''
+    Moduł temperatury
+    '''
 
-class TempSensor(SwichBoxD):
-
-    def getData(self):
+    def _getData(self):
         '''
         tempSensor - Get data from tempSensor
         '''
@@ -279,7 +291,6 @@ class TempSensor(SwichBoxD):
         api_adress = '/api/tempsensor/state'
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
-
 
 
 if __name__ == '__main__':
@@ -297,37 +308,35 @@ if __name__ == '__main__':
     swBox5 = SwichBoxD(dev5)
     tempSensor1 = TempSensor(dev6)
 
-    swBox = [swBox1, swBox2, swBox3, swBox4, swBox5,tempSensor1]
-    tempSensor = [tempSensor1]
-    print(swBox3.__doc__)
+    bleboxes = [swBox1, swBox2, swBox3, swBox4, swBox5, tempSensor1]
+    random.shuffle(bleboxes)
+    # print(swBox3.__doc__)
 
-    for box in swBox:
+    for box in bleboxes:
+        t1=time.perf_counter()
         print(30 * "=")
-        dev_adress=box.device_adress
+        dev_adress = box.device_adress
+        dev_state = box.device_state()
         print("Blebox adress: ", dev_adress)
+        print("{}: {} ".format("Dev State", dev_state))
         print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
         print("{}: {} ".format("Wifi Status", box.wifi_status()))
         print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Dev State", box.device_state()))
         print("{}: {} ".format("Up Time", box.device_uptime()))
-        if dev_adress == '192.168.1.206':
-            print("Temp Sensor data: ", box.getData())
-        else:
+        if  'switchBoxD' in dev_state['device']['type']:
             print("{}: {} ".format("Relay Get", box._relay_state()))
             print("{}: {} ".format("Switch State", box._switch_state()))
             print("{}: {} ".format("Relay State", box._relay_state()))
-        print("Koniec testu dla, ",dev_adress)
+        elif "tempSensor" in dev_state['device']['type']:
+            print("Temp Sensor data: ", box._getData())
+        t2=time.perf_counter()
+        print(f"Koniec testu dla {dev_adress}. Czas {t2-t1} sec.")
+        # break
 
-    print(30 * "=",'\n',"Uruchominie lampki")
-    print(swBox2._relay_set_get(1, 1))
-    time.sleep(5)
-    print(swBox2._relay_set_get(1, 0))
+    # print(30 * "=", '\n', "Uruchominie lampki")
+    # print(swBox2._relay_set_get(1, 1))
+    # time.sleep(5)
+    # print(swBox2._relay_set_get(1, 0))
 
-
-
-
-
-
-        
 
 
