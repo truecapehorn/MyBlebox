@@ -4,6 +4,8 @@
 import json
 import time
 import requests
+import concurrent.futures
+
 import sys
 
 
@@ -298,3 +300,12 @@ if __name__ == '__main__':
     print(swBox2.relay_set_get(1, 1))
     time.sleep(5)
     swBox2.relay_set_get(1, 0)
+
+    def print_somethink(cos):
+        return print("{}: {} ".format(cos[0], cos[1]))
+
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        akcje=[["Blebox adress",box.device_adress]]
+
+    
