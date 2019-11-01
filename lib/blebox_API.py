@@ -333,19 +333,17 @@ if __name__ == '__main__':
     print(30 * "=",'\n',"Uruchominie lampki")
     print(swBox2._relay_set_get(1, 1))
     time.sleep(5)
-<<<<<<< HEAD
-    swBox2.relay_set_get(1, 0)
+    swBox2._relay_set_get(1, 0)
 
     def print_somethink(cos):
         return print("{}: {} ".format(cos[0], cos[1]))
 
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        akcje=[["Blebox adress",box.device_adress]]
+    # with concurrent.futures.ThreadPoolExecutor() as executor:
+    #     akcje=[["Blebox adress",box.device_adress]]
 
-    
-=======
-    swBox2._relay_set_get(1, 0)
+
+
         
 
->>>>>>> developerka
+
