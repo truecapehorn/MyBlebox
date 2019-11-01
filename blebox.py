@@ -167,7 +167,7 @@ l = Devices("Lampka nocna", 0, actions["action_l"], salon)
 b = Devices("Biurko", 1, actions["action_b"], salon)
 
 p = Devices("Piecyk", 0, actions["action_p"], kotlownia)
-f = Devices("Wiatrak", 1, actions["action_f"], kotlownia)
+f = Devices("Wiatrak", 1, actions["action_f"], kotlownia)/home/norbert/python_scripts/WebHMI-API
 
 k = Devices("Kuchnia", 1, actions["action_k"], kuchnia)
 mp = Devices("Mały pokój", 0, actions["action_mp"], kuchnia)
