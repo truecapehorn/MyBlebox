@@ -11,7 +11,7 @@ swBox4 = SwichBoxD('192.168.1.204')
 swBox5 = SwichBoxD('192.168.1.205')
 tempSensor1 = TempSensor('192.168.1.206')
 
-print(Blebox.__doc__,'\n')
+print(Blebox.__doc__, '\n')
 
 t1 = time.perf_counter()
 
@@ -37,9 +37,9 @@ def box_test(box):
     except Exception:
         return f"{30 * '='}\n{colored(f'Problem z odpaleniem modułu: {box.device_adress} !!!', 'red')}\n"
 
+
 bleboxes = [swBox1, swBox2, swBox3, swBox4, swBox5, tempSensor1]
 with concurrent.futures.ProcessPoolExecutor() as executor:
-
     results = executor.map(box_test, bleboxes)
 
 for result in results:
