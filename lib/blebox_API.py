@@ -5,16 +5,14 @@ import json
 import time
 import requests
 import random
+from termcolor import colored
 
 
 # wifi_name = "ASUS_18_2G"
 # wifi_pwd = "501195121"
 
 class Blebox():
-    """
-    Obsluga Bleboxow
-
-    """
+    """Obsluga Bleboxow"""
 
     def __init__(self, device_adress, wifi_name="ASUS_18_2G", wifi_pwd="501195121"):
         self.device_adress = device_adress
@@ -29,7 +27,7 @@ class Blebox():
         '''Generacja requestu typu GET'''
         try:
             r = requests.get(url, timeout=3)
-            packages_json=r.json()
+            packages_json = r.json()
             return packages_json
         except Exception as e:
             print(e)
@@ -197,6 +195,7 @@ class BoxStat(Blebox):
         url = self.makeUrl(api_adress)
         return self.request_get(url)  # GET
 
+
 class SwichBoxD(BoxStat):
     """
     Moduł SwichboxD
@@ -276,8 +275,6 @@ class SwichBoxD(BoxStat):
         return self.request_get(url)  # GET
 
 
-
-
 class TempSensor(BoxStat):
     '''
     Moduł temperatury
@@ -294,49 +291,60 @@ class TempSensor(BoxStat):
 
 
 if __name__ == '__main__':
-    dev1 = '192.168.1.201'
-    dev2 = '192.168.1.202'
-    dev3 = '192.168.1.203'
-    dev4 = '192.168.1.204'
-    dev5 = '192.168.1.205'
-    dev6 = '192.168.1.206'
 
-    swBox1 = SwichBoxD(dev1)
-    swBox2 = SwichBoxD(dev2)
-    swBox3 = SwichBoxD(dev3)
-    swBox4 = SwichBoxD(dev4)
-    swBox5 = SwichBoxD(dev5)
-    tempSensor1 = TempSensor(dev6)
+    swBox1 = SwichBoxD('192.168.1.201')
+    swBox2 = SwichBoxD('192.168.1.202')
+    swBox3 = SwichBoxD('192.168.1.203')
+    swBox4 = SwichBoxD('192.168.1.204')
+    swBox5 = SwichBoxD('192.168.1.205')
+    tempSensor1 = TempSensor('192.168.1.206')
 
     bleboxes = [swBox1, swBox2, swBox3, swBox4, swBox5, tempSensor1]
     random.shuffle(bleboxes)
-    # print(swBox3.__doc__)
+    print(Blebox.__doc__)
 
-    for box in bleboxes:
-        t1=time.perf_counter()
-        print(30 * "=")
-        dev_adress = box.device_adress
-        dev_state = box.device_state()
-        print("Blebox adress: ", dev_adress)
-        print("{}: {} ".format("Dev State", dev_state))
-        print("{}: {} ".format("WiFi Connect", box.wifi_connect()))
-        print("{}: {} ".format("Wifi Status", box.wifi_status()))
-        print("{}: {} ".format("Wifi Scan", box.wifi_scan()))
-        print("{}: {} ".format("Up Time", box.device_uptime()))
-        if  'switchBoxD' in dev_state['device']['type']:
-            print("{}: {} ".format("Relay Get", box._relay_state()))
-            print("{}: {} ".format("Switch State", box._switch_state()))
-            print("{}: {} ".format("Relay State", box._relay_state()))
-        elif "tempSensor" in dev_state['device']['type']:
-            print("Temp Sensor data: ", box._getData())
-        t2=time.perf_counter()
-        print(f"Koniec testu dla {dev_adress}. Czas {t2-t1} sec.")
-        # break
+    import concurrent.futures
+
+    t1 = time.perf_counter()
+
+    def box_test(box):
+        t3 = time.perf_counter()
+        try:
+            dev_state = box.device_state()
+            if 'switchBoxD' in dev_state['device']['type']:
+                state = f"Relay Get: {box._relay_state()}\nSwitch State: {box._switch_state()}"
+            elif "tempSensor" in dev_state['device']['type']:
+                state = f"Temp Sensor data: {box._getData()}"
+
+
+            wyj = f"{30 * '='}\n{dev_state['device']['type']} - Blebox adress: {box.device_adress}\n" \
+                  f"Dev State: {box.device_state()}\n" \
+                  f"WiFi Connect: {box.wifi_connect()}\n" \
+                  f"Wifi Status: {box.wifi_status()}\n" \
+                  f"Wifi Scan: {box.wifi_scan()}\n" \
+                  f"Up Time: {box.device_uptime()}\n" \
+                  f"{state}\n" \
+                  f"Koniec testu dla {box.device_adress}. {colored(f'Czas: {time.perf_counter() - t3:.2f} sec.','green')}\n"
+            return wyj
+        except Exception:
+            return f"{30*'='}\n{colored(f'Problem z odpaleniem modułu: {box.device_adress} !!!','red')}\n"
+
+
+
+
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+
+        results = executor.map(box_test, bleboxes)
+
+    for result in results:
+
+        print(result)
+
 
     # print(30 * "=", '\n', "Uruchominie lampki")
     # print(swBox2._relay_set_get(1, 1))
     # time.sleep(5)
     # print(swBox2._relay_set_get(1, 0))
 
-
-
+    t2 = time.perf_counter()
+    print(f"{colored(f'Program wykonał sie w {t2 - t1:.2f} sec.','yellow')}")
