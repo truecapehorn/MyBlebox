@@ -300,8 +300,8 @@ if __name__ == '__main__':
     tempSensor1 = TempSensor('192.168.1.206')
 
     bleboxes = [swBox1, swBox2, swBox3, swBox4, swBox5, tempSensor1]
-    random.shuffle(bleboxes)
-    print(Blebox.__doc__)
+    # random.shuffle(bleboxes)
+    print("Test",Blebox.__doc__)
 
     import concurrent.futures
 
@@ -310,14 +310,11 @@ if __name__ == '__main__':
     def box_test(box):
         t3 = time.perf_counter()
         try:
-            dev_state = box.device_state()
-            if 'switchBoxD' in dev_state['device']['type']:
+            if 'switchBoxD' in (type := box.device_state()['device']['type']):
                 state = f"Relay Get: {box._relay_state()}\nSwitch State: {box._switch_state()}"
-            elif "tempSensor" in dev_state['device']['type']:
+            elif "tempSensor" in type:
                 state = f"Temp Sensor data: {box._getData()}"
-
-
-            wyj = f"{30 * '='}\n{dev_state['device']['type']} - Blebox adress: {box.device_adress}\n" \
+            wyj = f"{30 * '='}\n{type} - adress: {box.device_adress}\n" \
                   f"Dev State: {box.device_state()}\n" \
                   f"WiFi Connect: {box.wifi_connect()}\n" \
                   f"Wifi Status: {box.wifi_status()}\n" \
@@ -332,7 +329,7 @@ if __name__ == '__main__':
 
 
 
-    with concurrent.futures.ProcessPoolExecutor() as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
 
         results = executor.map(box_test, bleboxes)
 
