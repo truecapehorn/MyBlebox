@@ -8,9 +8,7 @@ t1 = time.perf_counter()
 
 blebox_list=[]
 
-def box_find(konc):
-    adres=f"192.168.1.{konc}"
-
+def box_find(adres):
     sw=SwichBoxD(adres)
     state=sw.device_state()
     if type(state) is dict:
@@ -18,10 +16,10 @@ def box_find(konc):
 
 def check(adr):
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=250) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
         try:
-            print(f"Sprawdznie adresu w przedziale 192.168.1.0-250")
-            results = executor.map(box_find, adr)
+            print(f"Sprawdznie adresów")
+            results = executor.map(box_find,adr)
         except Exception:
             pass
 
@@ -31,6 +29,8 @@ def check(adr):
     return blebox_list
 
 if __name__=='__main__':
-    address = [i for i in range(0, 250)]
+    # address = [f'192.168.1.{i}' for i in range(0, 250)]
+    address=[f"192.168.{x}.{y}" for x in range(0,10) for y in range(0,250)]
     lista = check(address)
     print(lista)
+    exit(0)

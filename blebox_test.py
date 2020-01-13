@@ -7,8 +7,9 @@ from termcolor import colored
 t1 = time.perf_counter()
 
 from network_scan import check
-address=[i for i in range(0,250)]
-lista=check(address)
+
+address = [f"192.168.{x}.{y}" for x in range(0, 11) for y in range(0, 251)]
+lista = check(address)
 print('Znaleziono urzadznia:')
 for i in lista:
     print(i)
