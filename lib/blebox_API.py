@@ -30,7 +30,8 @@ class Blebox():
             packages_json = r.json()
             return packages_json
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
             # sys.exit(0)
 
     def request_post(self, url, payload):
